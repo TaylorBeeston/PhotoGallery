@@ -1,13 +1,16 @@
 import { connect } from 'mongoose';
+import config from './config/config';
 import app from './app';
-import { port, mongoUrl } from './config';
+
+const { MONGODB_URI, PORT } = config.SERVER;
 
 (async () => {
-  await connect(mongoUrl, {
+  await connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   });
-  app.listen(port);
-  console.log(`App listening on port ${port}...`);
+  app.listen(PORT);
+  console.log(`App listening on port ${PORT}...`);
 })();

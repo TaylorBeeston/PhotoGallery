@@ -1,11 +1,13 @@
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
+import config from '../config/config';
 import redisClient from '../redis/redis';
-import {
-  accessTokenTimeout,
-  refreshTokenTimeout,
-  refreshTokenRefreshTime,
-} from '../config';
+
+const {
+  ACCESS_TOKEN_TIMEOUT,
+  REFRESH_TOKEN_TIMEOUT,
+  REFRESH_TOKEN_REFRESH_TIME,
+} = config.JWT;
 
 const exists = promisify(redisClient.exists).bind(redisClient);
 const setex = promisify(redisClient.setex).bind(redisClient);
@@ -65,13 +67,13 @@ export const newRefreshToken = (username, oldRefreshToken) => {
   if (oldRefreshToken) {
     const { iat, exp } = verifyRefreshToken(oldRefreshToken);
     // Only generate new token if old token expires within 24 hours
-    if (exp - iat > refreshTokenRefreshTime) return oldRefreshToken;
+    if (exp - iat > REFRESH_TOKEN_REFRESH_TIME) return oldRefreshToken;
 
-    blacklistToken(oldRefreshToken, refreshTokenRefreshTime);
+    blacklistToken(oldRefreshToken, REFRESH_TOKEN_REFRESH_TIME);
   }
 
   return jwt.sign({ username }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: refreshTokenTimeout,
+    expiresIn: REFRESH_TOKEN_TIMEOUT,
   });
 };
 
@@ -83,7 +85,7 @@ export const newRefreshToken = (username, oldRefreshToken) => {
  */
 export const newAccessToken = (username) =>
   jwt.sign({ username }, process.env.JWT_SECRET, {
-    expiresIn: accessTokenTimeout,
+    expiresIn: ACCESS_TOKEN_TIMEOUT,
   });
 
 /**
@@ -112,7 +114,7 @@ export const updateClientTokens = ({ response, refreshToken, accessToken }) => {
   return response
     .cookie('token', refreshToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + refreshTokenTimeout),
+      expires: new Date(Date.now() + REFRESH_TOKEN_TIMEOUT),
     })
     .status(200)
     .json({ accessToken });

@@ -1,0 +1,13 @@
+{
+  "server": {
+    "PORT": 9000,
+    "MONGODB_URI": "mongodb://localhost:27017/test_database",
+    "REDIS_URI": "redis://localhost:6379"
+  },
+  "JWT": {
+    "ACCESS_TOKEN_TIMEOUT": 30 * 60, // 30 Minutes
+    "REFRESH_TOKEN_TIMEOUT": 7 * 24 * 60 * 60, // 1 Week
+    "REFRESH_TOKEN_REFRESHTIME": 24 * 60 * 60 // 1 Day
+  },
+  "UPLOADER": "local"
+}

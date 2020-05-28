@@ -1,4 +1,4 @@
-import { Router, json } from 'express';
+import { Router } from 'express';
 import User from './user.model';
 import withAuth from '../auth/auth';
 

@@ -10,6 +10,7 @@
 
 # local db
 /db
+/server/local
 
 # production
 /build

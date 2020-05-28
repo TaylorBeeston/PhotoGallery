@@ -11,7 +11,7 @@ const usePhotoUpload = () => {
   const uploadPhoto = async (photo) => {
     setStatus(`Uploading ${photo.name}...`);
     const { signedRequest, url } = await (
-      await fetch(`/api/sign-s3?name=${photo.name}`, {
+      await fetch(`/api/uploads?name=${photo.name}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
