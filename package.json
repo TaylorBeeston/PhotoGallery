@@ -1,0 +1,80 @@
+{
+  "name": "kidsphotos",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:9000",
+  "engines": {
+    "node": ">=10.6.*",
+    "yarn": ">=1.10.*"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.678.0",
+    "axios": "^0.19.0",
+    "bcrypt": "^4.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "inquirer": "^7.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.3",
+    "node-sass": "^4.14.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.0",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "autoprefixer": "^9.8.0",
+    "axios-mock-adapter": "^1.17.0",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-minify": "^0.5.1",
+    "chalk": "^4.0.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^24.9.0",
+    "mongodb-memory-server": "^6.2.1",
+    "nodemon": "^2.0.2",
+    "postcss-cli": "^7.1.1",
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2",
+    "tailwindcss": "^1.4.6"
+  },
+  "scripts": {
+    "start-client": "yarn build-client:css && react-scripts start",
+    "build-client": "yarn build-client:css && react-scripts build",
+    "build-client:css": "postcss src/assets/styles/tailwind.css -o src/assets/styles/main.scss",
+    "test-client": "react-scripts test --coverage --watchAll=false",
+    "start": "cd build-server && node server.js",
+    "start-server": "nodemon --exec babel-node -r dotenv/config server/server.js",
+    "test-server": "jest --config=server/jest.config.js /server --coverage",
+    "build-server": "babel ./server --out-dir build-server --ignore \"server/coverage\",\"server/**/*.test.js\",\"server/jest.config.js\" --presets minify",
+    "build": "yarn build-server && yarn build-client",
+    "new-admin": "babel-node server/tools/newAdmin.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

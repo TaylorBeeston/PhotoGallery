@@ -1,0 +1,27 @@
+@tailwind base;
+
+@tailwind components;
+
+.btn {
+  @apply flex flex-col justify-center p-3 rounded shadow-inner transition duration-200;
+}
+
+.btn-white {
+  @apply px-4 py-2 text-black bg-white border-gray-700;
+}
+
+.btn-white:hover {
+  @apply text-white bg-gray-700;
+}
+
+.flex-center {
+  @apply justify-center items-center;
+}
+
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
