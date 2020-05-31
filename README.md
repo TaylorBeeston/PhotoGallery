@@ -1,100 +1,142 @@
-# The Beeston Kids
-A simple image uploading website
+<h3 align="center">The Beeston Kids</h3>
+
+<div align="center">
+
+  [![GitHub issues](https://img.shields.io/github/issues/TaylorBeeston/TheBeestonKids)](https://github.com/TaylorBeeston/TheBeestonKids/issues)
+  [![GitHub license](https://img.shields.io/github/license/TaylorBeeston/TheBeestonKids)](https://github.com/TaylorBeeston/TheBeestonKids/blob/master/LICENSE.md)
+
+</div>
 
 ---
 
-## Table of Contents
+<p align="center"> A simple image hosting webstie.
+    <br> 
+</p>
 
-* [Development](#development)
-  + [Frontend instructions](#frontend-instructions)
-  + [Backend instructions](#backend-instructions)
-* [Deployment](#deployment)
-  + [Build/Serve](#buildserve)
-  + [Environment Variables](#environment-variables)
-  + [Setup](#setup)
-* [Please note](#please-note)
+## 📝 Table of Contents
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Deployment](#deployment)
+- [Built Using](#built_using)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
+- [TODO](./TODO.md)
+- [Contributing](./CONTRIBUTING.md)
 
----
+## 🧐 About <a name="about"></a>
+I have a lot of family members asking my wife and I to send them photos of our children. Many of them
+do not use websites like Facebook or Instagram, and would prefer not to make an account. This has led
+to a bit of frustration when sending out photos. So, I decided to build my own image hosting website
+that does not require anything to view the photos, and allows me to easily upload all the pictures I
+need.
 
-## Development 
-### Frontend instructions
+## 🏁 Getting Started <a name = "getting_started"></a>
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-This frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Please refer to the source for more information.
+### Prerequisites
+- Node
+- Yarn
+- MongoDB
+- Redis
 
-Start development client:
-```
-yarn start-client
-```
+### Installing
 
-Run client tests:
-```
-yarn test-client
-```
-
-Build client for production:
-```
-yarn build-client
-```
-
-### Backend instructions
-
-This backend uses MongoDB, make sure you have it installed in your system.
-
-Install MongoDB and start your server: [MongoDB instructions](https://docs.mongodb.com/manual/administration/install-community/)
-
-Start development server:
-```
-yarn start-server
+#### Clone
+First, clone this repository using the following command
+```bash
+git clone git@github.com:TaylorBeeston/TheBeestonKids.git
 ```
 
-Run server tests:
+#### Mongo
+Next, make sure you have MongoDB up and running by following the instructions 
+[here](https://docs.mongodb.com/manual/administration/install-community/), or by using a cloud
+service such as [Atlas](https://www.mongodb.com/cloud/atlas). If needed, the MongoDB URI can be
+set with the `MONGODB_URI` environment variable, or by updating the default value in 
+`server/config/defaults.js`.
+
+#### Redis
+Once you have Mongo up and Running, you will need to set up [Redis](https://redis.io/download).
+Similarly to Mongo, you can set the `REDIS_URI` environment variable, or update the default
+value in `server/config/defaults.js`.
+
+#### Environment Variables
+With Redis and Mongo Set up, the last thing you will need to do is set your environment variables.
+In development, the only environment variables you should need to set are `JWT_SECRET`, and 
+`JWT_REFRESH_SECRET`. These can be set to anything you like. They represent a secret string used
+to sign and verify JSON web tokens for authentication. You may set them by creating a file named
+`.env` in the root folder and adding the following to it
 ```
-yarn test-server
+JWT_SECRET=YANKEEWITHNOBRIM
+JWT_REFRESH_SECRET=BRIMWITHNOYANKEE
 ```
 
-Build server for production:
-```
-yarn build-server
-```
+In production, or if you set the development uploader to use S3 by editing the 
+`server/config/environments/development.js` file, you will additionally need to set the
+`AWS_S3_BUCKET_NAME`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` variables.
+This can be done using the same .env file, but if you are hosting your site using a service such as
+Heroku, they usually provide an alternative method to set environment variables.
 
-## Deployment
-### Build/Serve
-Build both frontend and backend using 
-```
+#### Admin Accounts
+To be able to sign in, you need to be able to make an account! This can be done by running 
+`yarn new-admin`, which will start a CLI tool that asks for a username and password, and then
+generates an admin account for you. You can make as many accounts as you like, however each account
+must have a unique username.
+
+#### 🚀 Start uploading!
+Make sure Mongo and Redis are running, then launch the server with `yarn start-server` and the
+client with `yarn start-client`. Your browser should open to `localhost:3000`, and allow you to
+sign in and start uploading photos!
+
+## 🚀 Deployment <a name = "deployment"></a>
+I have not yet deployed this site myself, so you'll have to bare with me as I work on this part of
+the README.
+
+### Build
+First, run the following command
+```bash
 yarn build
 ```
 
-Then
+This will create two folders, `build`, and `build-server`.
+
+### Deploy
+
+#### Foreword
+I would suggest creating a separate branch that contains just the `build` and `build-server` folders
+and the `package.json` file, then deploying that branch. 
+
+#### Environment Variables
+As mentioned above in [Getting Started](#getting_started), you will need to set the following
+environment variables
 ```
+JWT_SECRET=SUPERSECRETSECRET
+JWT_REFRESH_SECRET=ALSOASECRET
+AWS_S3_BUCKET_NAME=mybucketname
+AWS_REGION=us-west-2
+AWS_ACCESS_KEY_ID=biglongstring
+AWS_SECRET_ACCESS_KEY=biggerlongerstring
+```
+
+#### Starting the Server
+The server may then be started running
+```bash
 yarn start
 ```
 
-If you are using Heroku, I would suggest building and then pushing the built files directly
-to Heroku to have the server spin up faster.
+## ⛏️ Built Using <a name="built_using"></a>
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Express](https://expressjs.com/) - Server Framework
+- [ReactJS](https://reactjs.org/) - Web Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Tailwind](https://tailwindcss.org/) - CSS Framework
 
-### Environment Variables
+## ✍️ Authors <a name="authors"></a>
+- [@TaylorBeeston](https://github.com/TaylorBeeston) - Creater/Maintainer
 
-Please include the following environment variables in your production environment:
-```
-AWS_S3_BUCKET_NAME      The name of your AWS S3 Bucket
-AWS_REGION              Your AWS S3 Bucket's Region
-AWS_ACCESS_KEY_ID       The AWS Access Key for your AWS IAM account
-AWS_SECRET_ACCESS_KEY   The AWS Secret Access Key for your AWS IAM account
-JWT_SECRET              A secret string to use when signing Access Tokens
-JWT_REFRESH_SECRET      A secret string to use when signing Refresh Tokens
-```
+See also the list of [contributors](https://github.com/TaylorBeeston/TheBeestonKids/contributors) who participated in this project.
 
-### Setup
-
-Once you have successfully deployed to your production environment, create a new admin account with
-```
-yarn new-admin
-```
-
-You may now log in and upload photos using the account(s) you created with the new-admin script!
-
-## Please note
-Currently, there is no system in place to differentiate between environments. This means that
-if you use a given S3 bucket in development, that same bucket will be used in production! I am
-planning on setting up a system to handle different environments to facilitate the separation
-of production, development, and testing, but currently it simply does not exist.
+## 🎉 Acknowledgements <a name="acknowledgement"></a>
+- Dev.to
+- Medium.com
+- Stackoverflow.com
+- Coffee
