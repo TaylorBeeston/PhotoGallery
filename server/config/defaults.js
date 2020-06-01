@@ -2,7 +2,7 @@ export default {
   SERVER: {
     MONGODB_URI:
       process.env.MONGODB_URI || 'mongodb://localhost:27017/test_database',
-    REDIS_URI: process.env.REDIS_URI || 'redis://localhost:6379',
+    REDIS_URI: process.env.REDIS_URL || 'redis://localhost:6379',
     PORT: process.env.PORT || 9000,
   },
   JWT: {
