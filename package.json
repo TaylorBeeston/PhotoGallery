@@ -62,7 +62,10 @@
     "test-server": "jest --config=server/jest.config.js /server --coverage",
     "build-server": "babel ./server --out-dir build-server --ignore \"server/coverage\",\"server/**/*.test.js\",\"server/jest.config.js\" --presets minify",
     "build": "yarn build-server && yarn build-client",
-    "new-admin": "babel-node server/tools/newAdmin.js"
+    "new-admin": "babel-node server/tools/newAdmin.js",
+    "eslint": "eslint --quiet server/**/*.js src/**/*.js",
+    "prettier": "prettier server/**/*.js src/**/*.js",
+    "lint": "yarn eslint --fix && yarn prettier --write"
   },
   "eslintConfig": {
     "extends": "react-app"

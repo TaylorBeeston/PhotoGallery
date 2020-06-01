@@ -12,10 +12,10 @@ const Photo = ({
 
   if (lightbox) {
     returnVal = (
-      <div
-        role="button"
+      <button
+        type="button"
         onClick={() => setLightbox(false)}
-        className="fixed top-0 z-10 flex w-screen h-screen flex-center"
+        className="fixed top-0 left-0 z-10 flex w-screen h-screen flex-center"
       >
         <div className="absolute w-full h-full bg-black opacity-75" />
         <img
@@ -23,12 +23,12 @@ const Photo = ({
           alt={name}
           className="relative z-20 w-screen md:h-screen md:w-auto"
         />
-      </div>
+      </button>
     );
   } else {
     returnVal = (
-      <div
-        role="button"
+      <button
+        type="button"
         onClick={() => setLightbox(true)}
         className="w-full h-full relative rounded"
       >
@@ -52,7 +52,7 @@ const Photo = ({
             {name}
           </h3>
         )}
-      </div>
+      </button>
     );
   }
 

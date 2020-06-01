@@ -1,12 +1,14 @@
 import { connect, disconnect } from 'mongoose';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import User from '../server/users/user.model';
-import { url } from '../server/config';
+import User from '../users/user.model';
+import config from '../config/config';
+
+const { MONGODB_URI } = config.SERVER;
 
 (async () => {
   try {
-    await connect(url, {
+    await connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

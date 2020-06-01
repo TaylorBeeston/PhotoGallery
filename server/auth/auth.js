@@ -14,6 +14,7 @@ providing new access/refresh tokens if necessary
  form of `Bearer: ${accessToken}`)
  * @return {string} Access/refresh tokens
  */
+// eslint-disable-next-line consistent-return
 export default async (request, response, next) => {
   const refreshToken = request.cookies.token;
   const accessToken = request.headers.authorization.split(' ')[1];

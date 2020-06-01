@@ -31,11 +31,18 @@ router.route('/').post(json(), withAuth, async (request, response) => {
 /**
  * Gets all photos from the database
  *
- * @return {Array.{_id: string, name: string, url: string}}
+ * @return {Array.{id: string, name: string, url: string}}
  */
 router.route('/').get(async (_, response) => {
   const photos = await Photo.find();
-  return response.status(200).json(photos);
+  return response.status(200).json(
+    photos.map((photo) => ({
+      // eslint-disable-next-line no-underscore-dangle
+      id: photo._id,
+      name: photo.name,
+      url: photo.url,
+    })),
+  );
 });
 
 // If using local file storage, add routes to host photos locally
