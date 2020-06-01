@@ -44,7 +44,7 @@ These instructions will get you a copy of the project up and running on your loc
 #### Clone
 First, clone this repository using the following command
 ```bash
-git clone git@github.com:TaylorBeeston/TheBeestonKids.git
+$ git clone git@github.com:TaylorBeeston/TheBeestonKids.git
 ```
 
 #### Mongo
@@ -94,7 +94,7 @@ the README.
 ### Build
 First, run the following command
 ```bash
-yarn build
+$ yarn build
 ```
 
 This will create two folders, `build`, and `build-server`.
@@ -120,7 +120,7 @@ AWS_SECRET_ACCESS_KEY=biggerlongerstring
 #### Starting the Server
 The server may then be started running
 ```bash
-yarn start
+$ yarn start
 ```
 
 ## ⛏️ Built Using <a name="built_using"></a>

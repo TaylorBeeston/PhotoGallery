@@ -1,8 +1,9 @@
-# TODO
+# 📝 TODO
 
 ---
 
-## Features
+## 🚀 Features
+- [ ] Update title, favicon, etc
 - [ ] Sort Photos by Date uploaded
 - [ ] Pagination
 - [ ] Infinite Scrolling
@@ -12,16 +13,16 @@
 - [ ] Users CRUD
 - [ ] Better handling of missing environment variables
 - [ ] Make Redis optional
-## Testing
+## 🧪 Testing
 - [ ] Better test coverage
-## Documentation
+## 📄 Documentation
 - [ ] Formal API documentation using Swagger
 - [x] Improved README.md
-## Devops
+## 🔧 Devops
 - [x] Allow for different development/testing/production environments
 - [ ] Set up Github Actions to automatically build and deploy to Heroku
 - [ ] Set up Husky to lint before commit
-## Refactoring
+## 💪 Refactoring
 - [  ] Refactor Frontend authentication structure
   - [ ] Store logged in state using React Context
   - [ ] Set up ProtectedRoute component
