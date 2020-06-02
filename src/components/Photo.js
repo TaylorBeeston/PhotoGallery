@@ -12,8 +12,10 @@ const Photo = ({
 
   if (lightbox) {
     returnVal = (
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex="0"
+        aria-pressed="true"
         onClick={() => setLightbox(false)}
         className="fixed top-0 left-0 z-10 flex w-screen h-screen flex-center"
       >
@@ -23,13 +25,16 @@ const Photo = ({
           alt={name}
           className="relative z-20 w-screen md:h-screen md:w-auto"
         />
-      </button>
+      </div>
     );
   } else {
     returnVal = (
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex="0"
+        aria-pressed="false"
         onClick={() => setLightbox(true)}
+        onKeyDown={(e) => e.key === 'Enter' && setLightbox(true)}
         className="w-full h-full relative rounded"
       >
         {deleteable && (
@@ -52,7 +57,7 @@ const Photo = ({
             {name}
           </h3>
         )}
-      </button>
+      </div>
     );
   }
 
