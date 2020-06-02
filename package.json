@@ -8,6 +8,10 @@
     "yarn": ">=1.10.*"
   },
   "dependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "aws-sdk": "^2.678.0",
     "bcrypt": "^4.0.1",
     "chalk": "^4.0.0",
@@ -26,10 +30,6 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/node": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
