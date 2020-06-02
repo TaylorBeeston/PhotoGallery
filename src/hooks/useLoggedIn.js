@@ -15,7 +15,11 @@ const useLoggedIn = () => {
           const { accessToken } = await res.json();
           setLoggedIn(true);
           localStorage.setItem('accessToken', accessToken);
-        } else if (res.status === 500) setTimeout(getLoggedIn, 1000);
+        } else if (res.status === 500) {
+          setTimeout(getLoggedIn, 1000);
+        } else if (res.status === 401) {
+          setLoggedIn(false);
+        }
       } catch (error) {
         console.log(error);
         setLoggedIn(false);
