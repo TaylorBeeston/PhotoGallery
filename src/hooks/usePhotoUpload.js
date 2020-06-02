@@ -9,7 +9,6 @@ const usePhotoUpload = () => {
   const clearStatus = () => setStatus('');
 
   const uploadPhoto = async (photo) => {
-    setStatus(`Uploading ${photo.name}...`);
     const { signedRequest, url } = await (
       await fetch(`/api/uploads?name=${photo.name}`, {
         headers: {
@@ -42,7 +41,7 @@ const usePhotoUpload = () => {
   };
 
   const uploadPhotos = async () => {
-    await photos.forEach(uploadPhoto);
+    await Promise.all(photos.map(uploadPhoto));
     setTimeout(() => history.push('/'), 1000);
   };
 
