@@ -11,7 +11,6 @@
     "aws-sdk": "^2.678.0",
     "bcrypt": "^4.0.1",
     "chalk": "^4.0.0",
-    "config": "^3.3.1",
     "cookie-parser": "^1.4.5",
     "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",
