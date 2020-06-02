@@ -4,7 +4,7 @@ const Photo = ({
   name,
   url,
   removePhoto,
-  deleteable = false,
+  deleteable = true,
   showName = false,
 }) => {
   const [lightbox, setLightbox] = useState(false);
@@ -35,16 +35,26 @@ const Photo = ({
         aria-pressed="false"
         onClick={() => setLightbox(true)}
         onKeyDown={(e) => e.key === 'Enter' && setLightbox(true)}
-        className="w-full h-full relative rounded"
+        className="relative w-full h-full rounded"
       >
         {deleteable && (
           <button
             type="button"
-            className="absolute flex items-center justify-center w-8 h-8 mt-1 ml-1 bg-red-600 rounded shadow-inner"
+            className="absolute flex items-center justify-center w-8 h-8 mt-1 ml-1 bg-black bg-opacity-50 rounded-full shadow hover:shadow-outline transform hover:rotate-180 transition ease-in-out duration-200 text-white"
             onClick={removePhoto}
           >
-            <span className="absolute w-6 h-1 bg-white rounded-sm transform rotate-45" />
-            <span className="absolute w-6 h-1 bg-white rounded-sm transform -rotate-45" />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.586 13l-2.293 2.293a1 1 0 0 0 1.414 1.414L13 14.414l2.293 2.293a1 1 0 0 0 1.414-1.414L14.414 13l2.293-2.293a1 1 0 0 0-1.414-1.414L13 11.586l-2.293-2.293a1 1 0 0 0-1.414 1.414L11.586 13z"
+                fill="currentColor"
+                fillRule="nonzero"
+              />
+            </svg>
           </button>
         )}
         <img
