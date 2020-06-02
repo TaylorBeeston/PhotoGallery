@@ -41,9 +41,9 @@ const usePhotoUpload = () => {
     }
   };
 
-  const uploadPhotos = () => {
-    photos.forEach(uploadPhoto);
-    setTimeout(() => history.push('/'), 3000);
+  const uploadPhotos = async () => {
+    await photos.forEach(uploadPhoto);
+    setTimeout(() => history.push('/'), 1000);
   };
 
   return { photos, setPhotos, uploadPhotos, status, clearStatus };
