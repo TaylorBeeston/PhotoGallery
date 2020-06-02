@@ -1,5 +1,5 @@
 import React from 'react';
-import usePhotos from '../hooks/usePhotos';
+import usePhotos from '../../hooks/usePhotos';
 import Photo from './Photo';
 
 const Photos = () => {

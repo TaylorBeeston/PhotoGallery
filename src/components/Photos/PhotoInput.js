@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Photo from './Photo';
-import Icon from '../assets/images/UploadIcon.svg';
+import Icon from '../../assets/images/UploadIcon.svg';
 
 const PhotoInput = ({ onChange }) => {
   const [photos, setPhotos] = useState([]);

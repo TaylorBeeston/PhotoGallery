@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import usePhotoUpload from '../hooks/usePhotoUpload';
+import usePhotoUpload from '../../hooks/usePhotoUpload';
 import PhotoInput from './PhotoInput';
-import StatusMessage from './StatusMessage';
-import UploadToS3Icon from '../assets/images/UploadToS3Icon.svg';
+import StatusMessage from '../UI/StatusMessage';
+import UploadToS3Icon from '../../assets/images/UploadToS3Icon.svg';
 
 const PhotoUploader = () => {
   const [uploading, setUploading] = useState(false);
