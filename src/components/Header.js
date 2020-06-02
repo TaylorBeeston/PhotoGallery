@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <header className="flex justify-between p-5 bg-gray-400 border-b">
       <Link to="/">
-        <h1 className="font-sans text-4xl subpixel-antialiased font-light tracking-wider bg-green-200 btn">
+        <h1 className="font-title text-4xl subpixel-antialiased font-light tracking-wider bg-green-200 btn">
           The Beeston Kids
         </h1>
       </Link>

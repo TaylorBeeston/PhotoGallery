@@ -235,6 +235,20 @@ module.exports = {
       default: '1',
     },
     fontFamily: {
+      title: [
+        'Nunito',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Noto Color Emoji"',
+      ],
       sans: [
         'system-ui',
         '-apple-system',
