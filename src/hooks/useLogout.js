@@ -1,14 +1,11 @@
 import { useHistory } from 'react-router-dom';
+import { authFetch } from '../helpers/request.helpers';
 
 const useLogout = () => {
   const history = useHistory();
 
   const logout = async () => {
-    await fetch('/auth/logout', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    await authFetch('/auth/logout');
     localStorage.setItem('accessToken', '');
 
     history.push('/');
