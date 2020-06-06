@@ -1,3 +1,5 @@
+const tailwindGradients = require('tailwindcss-gradients');
+
 module.exports = {
   purge: ['./src/**/*.html', './src/**/*.js'],
   target: 'relaxed',
@@ -128,6 +130,12 @@ module.exports = {
         800: '#97266d',
         900: '#702459',
       },
+    },
+    linearGradientColors: (theme) => theme('colors'),
+    radialGradientColors: (theme) => theme('colors'),
+    conicGradientColors: (theme) => theme('colors'),
+    radialGradientSizes: {
+      default: 'closest-corner',
     },
     spacing: {
       px: '1px',
@@ -749,5 +757,5 @@ module.exports = {
     transitionDelay: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [tailwindGradients],
 };
