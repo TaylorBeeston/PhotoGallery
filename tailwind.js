@@ -129,6 +129,37 @@ module.exports = {
         900: '#702459',
       },
     },
+    linearGradientColors: (theme) => theme('colors'),
+    radialGradientColors: (theme) => theme('colors'),
+    conicGradientColors: (theme) => theme('colors'),
+    radialGradientSizes: {
+      default: 'closest-corner',
+    },
+    animations: {
+      'flip-entrance': {
+        from: {
+          opacity: 0,
+          transform: 'rotateY(120deg) scale(0.3)',
+        },
+        to: {
+          opacity: 1,
+          transform: 'rotateY(0deg) scale(1)',
+        },
+      },
+      'flip-exit': {
+        from: {
+          opacity: 1,
+          transform: 'rotateY(0deg) scale(1)',
+        },
+        to: {
+          opacity: 0,
+          transform: 'rotateY(120deg) scale(0.3)',
+        },
+      },
+    },
+    animationDuration: {
+      default: '0.3s',
+    },
     spacing: {
       px: '1px',
       '0': '0',
@@ -149,6 +180,7 @@ module.exports = {
       '48': '12rem',
       '56': '14rem',
       '64': '16rem',
+      half: '50%',
     },
     backgroundColor: (theme) => theme('colors'),
     backgroundOpacity: (theme) => theme('opacity'),
@@ -201,7 +233,7 @@ module.exports = {
         '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-      outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
+      outline: '0 0 0 3px rgba(255, 255, 255, 0.5)',
       none: 'none',
     },
     container: {},
@@ -235,6 +267,20 @@ module.exports = {
       default: '1',
     },
     fontFamily: {
+      title: [
+        'Nunito',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Noto Color Emoji"',
+      ],
       sans: [
         'system-ui',
         '-apple-system',
@@ -735,5 +781,8 @@ module.exports = {
     transitionDelay: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    require('tailwindcss-gradients'),
+    require('tailwindcss-animations'),
+  ],
 };

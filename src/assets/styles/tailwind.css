@@ -1,21 +1,66 @@
+:root {
+  --min-photo-size: 240px;
+}
+
 @tailwind base;
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('../fonts/Nunito-Light'),
+    url(https://fonts.gstatic.com/s/nunito/v12/XRXW3I6Li01BKofAnsSUYevI.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
 
 @tailwind components;
 
-.btn {
-  @apply flex flex-col justify-center p-3 rounded shadow-inner transition duration-200;
+.link {
+  @apply flex flex-col justify-center px-8 py-4 text-gray-800 underline border rounded;
 }
 
-.btn-white {
-  @apply px-4 py-2 text-black bg-white border-gray-700;
+.fixed-ui-component {
+  @apply flex px-8 py-4 rounded-full transition ease-in-out duration-200;
 }
 
-.btn-white:hover {
-  @apply text-white bg-gray-700;
+.green-ui-component {
+  @apply bg-green-300 border-4 border-green-600;
+}
+
+.hoverable-green-ui-component {
+  @apply bg-green-300 border-4 border-green-600 transition ease-in-out duration-200;
+}
+
+.hoverable-green-ui-component:hover {
+  @apply bg-gray-100 border-green-300;
+}
+
+.fixed-br {
+  @apply fixed bottom-0 right-0 mb-2 mr-2;
+}
+
+.fixed-bl {
+  @apply fixed bottom-0 left-0 mb-2 ml-2;
 }
 
 .flex-center {
-  @apply justify-center items-center;
+  @apply items-center justify-center;
+}
+
+.photo-grid {
+  @apply grid gap-2 grid-flow-row-dense;
+  grid-template-columns: repeat(auto-fit, minmax(var(--min-photo-size), 1fr));
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: ew-resize;
+  @apply bg-green-300 rounded-lg w-8 h-8;
 }
 
 @tailwind utilities;

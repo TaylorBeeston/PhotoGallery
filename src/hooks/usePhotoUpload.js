@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import optimize from '../helpers/photoOptimizer.helpers';
+import { authFetchJson, authFetchText } from '../helpers/request.helpers';
 
 const usePhotoUpload = () => {
   const [photos, setPhotos] = useState([]);
@@ -9,40 +11,41 @@ const usePhotoUpload = () => {
   const clearStatus = () => setStatus('');
 
   const uploadPhoto = async (photo) => {
-    const { signedRequest, url } = await (
-      await fetch(`/api/uploads?name=${photo.name}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-    ).json();
-
     try {
-      await fetch(signedRequest, { method: 'PUT', body: photo });
+      setStatus(`Shrinking ${photo.name}`);
+      const optimizedPhoto = await optimize(photo);
+      const name = photo.name.replace(/\..*/, '.jpeg');
+
+      const { signedRequest, url } = await authFetchJson(
+        `/api/uploads?name=${name}`,
+      );
+
+      await fetch(signedRequest, { method: 'PUT', body: optimizedPhoto });
 
       setStatus(
-        await (
-          await fetch('/api/photos', {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify({
-              name: photo.name,
-              url,
-            }),
-          })
-        ).text(),
+        await authFetchText('/api/photos', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            name,
+            url,
+          }),
+        }),
       );
-    } catch (err) {
-      setStatus(err);
+    } catch (error) {
+      setStatus(error);
     }
   };
 
   const uploadPhotos = async () => {
-    await Promise.all(photos.map(uploadPhoto));
-    setTimeout(() => history.push('/'), 1000);
+    try {
+      await Promise.all(photos.map(uploadPhoto));
+      setTimeout(() => history.push('/'), 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { photos, setPhotos, uploadPhotos, status, clearStatus };

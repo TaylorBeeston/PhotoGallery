@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PhotoUploader from './PhotoUploader';
-import Photos from './Photos';
+import PhotoUploader from './Photos/PhotoUploader';
+import Photos from './Photos/Photos';
 import Header from './Header';
 import Login from './Login';
 
