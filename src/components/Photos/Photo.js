@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DeleteButton from '../UI/DeleteButton';
+import DeleteButton from 'components/UI/DeleteButton';
 
 const Photo = ({
   name,

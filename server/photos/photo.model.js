@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
-const photoSchemaDef = {
+const photoSchema = Schema({
   name: {
     type: String,
     unique: true,
@@ -10,8 +11,8 @@ const photoSchemaDef = {
     type: String,
     required: true,
   },
-};
+});
 
-const photoSchema = new Schema(photoSchemaDef);
+photoSchema.plugin(uniqueValidator);
 
 export default model('Photo', photoSchema);

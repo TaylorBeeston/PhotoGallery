@@ -1,8 +1,8 @@
 import React from 'react';
-import useLightbox from '../../hooks/useLightbox';
-import DeleteButton from '../UI/DeleteButton';
-import RightArrow from '../UI/RightArrow';
-import LeftArrow from '../UI/LeftArrow';
+import useLightbox from 'hooks/useLightbox';
+import DeleteButton from 'components/UI/DeleteButton';
+import RightArrow from 'components/UI/RightArrow';
+import LeftArrow from 'components/UI/LeftArrow';
 
 const Lightbox = ({ photos, exit, startingPhoto }) => {
   const {

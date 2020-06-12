@@ -114,7 +114,7 @@ export const updateClientTokens = ({ response, refreshToken, accessToken }) => {
   return response
     .cookie('token', refreshToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + REFRESH_TOKEN_TIMEOUT),
+      maxAge: REFRESH_TOKEN_TIMEOUT * 1000, // maxAge is in milliseconds
     })
     .status(200)
     .json({ accessToken });

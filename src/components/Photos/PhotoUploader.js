@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import usePhotoUpload from '../../hooks/usePhotoUpload';
-import PhotoInput from './PhotoInput';
-import StatusMessage from '../UI/StatusMessage';
-import UploadToS3Icon from '../../assets/images/UploadToS3Icon.svg';
-import Button from '../UI/Button';
+import usePhotoUpload from 'hooks/usePhotoUpload';
+import PhotoInput from 'components/Photos/PhotoInput';
+import StatusMessage from 'components/UI/StatusMessage';
+import UploadToS3Icon from 'assets/images/UploadToS3Icon.svg';
+import Button from 'components/UI/Button';
 
 const PhotoUploader = () => {
   const [uploading, setUploading] = useState(false);

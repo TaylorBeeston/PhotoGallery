@@ -5,6 +5,9 @@ export default {
     REDIS_URI: process.env.REDIS_URL || 'redis://localhost:6379',
     PORT: process.env.PORT || 9000,
   },
+  SECURITY: {
+    PASSWORD_SALT_ROUNDS: 10,
+  },
   JWT: {
     ACCESS_TOKEN_TIMEOUT: 30 * 60, // 30 Mintes
     REFRESH_TOKEN_TIMEOUT: 7 * 24 * 60 * 60, // 1 Week

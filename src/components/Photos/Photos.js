@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import usePhotos from '../../hooks/usePhotos';
-import Photo from './Photo';
-import Lightbox from './Lightbox';
-import Slider from '../UI/Slider';
-import ZoomIcon from '../../assets/images/ZoomIcon.svg';
+import usePhotos from 'hooks/usePhotos';
+import Photo from 'components/Photos/Photo';
+import Lightbox from 'components/Photos/Lightbox';
+import Slider from 'components/UI/Slider';
+import ZoomIcon from 'assets/images/ZoomIcon.svg';
 
 const Photos = () => {
   const { photos } = usePhotos();

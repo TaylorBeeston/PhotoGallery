@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { authFetch } from '../helpers/request.helpers';
+import { authFetch } from 'helpers/request.helpers';
 
 const useLoggedIn = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -17,14 +17,17 @@ const useLoggedIn = () => {
             break;
           }
           case 401: {
+            console.log(res);
             setLoggedIn(false);
             break;
           }
           case 500: {
+            console.log(res);
             setTimeout(getLoggedIn, 1000);
             break;
           }
           default: {
+            console.log(res);
             setLoggedIn(false);
           }
         }
@@ -35,7 +38,7 @@ const useLoggedIn = () => {
     };
 
     if (localStorage.getItem('accessToken')) getLoggedIn();
-  }, []);
+  });
 
   return { isLoggedIn };
 };

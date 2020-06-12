@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import optimize from '../helpers/photoOptimizer.helpers';
-import { authFetchJson, authFetchText } from '../helpers/request.helpers';
+import optimize from 'helpers/photoOptimizer.helpers';
+import { authFetchJson, authFetchText } from 'helpers/request.helpers';
 
 const usePhotoUpload = () => {
   const [photos, setPhotos] = useState([]);
