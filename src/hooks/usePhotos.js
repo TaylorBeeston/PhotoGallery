@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { authFetch } from 'helpers/request.helpers';
 
 const usePhotos = () => {
   const [photos, setPhotos] = useState([]);
@@ -16,7 +17,18 @@ const usePhotos = () => {
     getPhotos();
   }, []);
 
-  return { photos };
+  const deletePhoto = async (id) => {
+    const response = await authFetch(`/api/photos/${id}`, {
+      method: 'DELETE',
+    });
+    if (response.status === 200) {
+      setPhotos(photos.filter((photo) => photo.id !== id));
+    } else {
+      console.log(response);
+    }
+  };
+
+  return { photos, deletePhoto };
 };
 
 export default usePhotos;
