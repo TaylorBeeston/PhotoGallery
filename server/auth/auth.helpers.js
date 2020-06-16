@@ -119,3 +119,19 @@ export const updateClientTokens = ({ response, refreshToken, accessToken }) => {
     .status(200)
     .json({ accessToken });
 };
+
+export const verifyAndUpdateTokens = async ({ response, refreshToken }) => {
+  try {
+    const { username } = await verifyRefreshToken(refreshToken);
+    const tokens = newTokens(username, refreshToken);
+
+    return updateClientTokens({
+      response,
+      username,
+      refreshToken: tokens.refreshToken,
+      accessToken: tokens.accessToken,
+    });
+  } catch (err) {
+    return response.status(401).send('Unauthorized: Invalid refresh token');
+  }
+};

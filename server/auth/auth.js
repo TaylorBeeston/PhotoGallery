@@ -1,9 +1,4 @@
-import {
-  verifyRefreshToken,
-  verifyAccessToken,
-  newTokens,
-  updateClientTokens,
-} from './auth.helpers';
+import { verifyAccessToken, verifyAndUpdateTokens } from './auth.helpers';
 
 /**
  * Middleware that verifies that the requestor is correctly logged in, 
@@ -17,7 +12,7 @@ providing new access/refresh tokens if necessary
 // eslint-disable-next-line consistent-return
 export default async (request, response, next) => {
   const refreshToken = request.cookies.token;
-  const accessToken = request.headers.authorization.split(' ')[1];
+  const accessToken = request.headers.authorization?.split(' ')[1];
 
   if (!accessToken && !refreshToken)
     return response.status(401).send('Unauthorized: No token provided');
@@ -27,22 +22,8 @@ export default async (request, response, next) => {
     request.username = username;
     next();
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      // access token expired
-      try {
-        const { username } = await verifyRefreshToken(refreshToken);
-        const tokens = newTokens(username, refreshToken);
-
-        return updateClientTokens({
-          response,
-          username,
-          refreshToken: tokens.refreshToken,
-          accessToken: tokens.accessToken,
-        });
-      } catch (err) {
-        return response.status(401).send('Unauthorized: Invalid refresh token');
-      }
-    }
+    if (error.name === 'TokenExpiredError')
+      return verifyAndUpdateTokens({ response, refreshToken });
 
     return response.status(401).send('Unauthorized: Invalid token');
   }
