@@ -10,7 +10,7 @@
 - [x] Download Buttons
    - [ ] Create API endpoint for photo downloads instead of relying on download attribute
 - [ ] HTTPS
-- [ ] Photos CRUD
+- [x] Photos CRUD
 - [ ] Users CRUD
 - [ ] Better handling of missing environment variables
 - [ ] Make Redis optional
@@ -26,6 +26,6 @@
 - [ ] Set up Github Actions to automatically build and deploy to Heroku
 - [ ] Set up Husky to lint before commit
 ## 💪 Refactoring
-- [  ] Refactor Frontend authentication structure
-  - [ ] Store logged in state using React Context
-  - [ ] Set up ProtectedRoute component
+- [x] Refactor Frontend authentication structure
+  - [x] Store logged in state using React Context
+  - [x] Set up ProtectedRoute component
