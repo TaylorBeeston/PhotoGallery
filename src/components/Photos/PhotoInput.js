@@ -50,6 +50,7 @@ const PhotoInput = ({ onChange }) => {
         multiple
         onChange={handleChange}
         className="hidden"
+        accept="image/*"
       />
       {previews}
     </div>
