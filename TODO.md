@@ -4,6 +4,7 @@
 
 ## 🚀 Features
 - [ ] Update title, favicon, etc
+- [ ] Read EXIF data from photos
 - [ ] Sort Photos by Date uploaded
 - [ ] Pagination
 - [ ] Infinite Scrolling
@@ -16,6 +17,10 @@
 - [ ] Make Redis optional
 - [ ] Thumbnails
 - [ ] Lazy loading
+- [ ] Touch Events
+   - [ ] Swipe left/right in lightbox
+   - [ ] Pinch to zoom in/out
+- [ ] Video support
 ## 🧪 Testing
 - [ ] Better test coverage
 ## 📄 Documentation
