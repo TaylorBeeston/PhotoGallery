@@ -15,7 +15,7 @@ const Slider = ({
   };
 
   return (
-    <div className="flex px-4 py-2 opacity-50 green-ui-component fixed-bl fixed-ui-component flex-center focus:opacity-100 focus-within:opacity-100 hover:opacity-100 transition ease-in-out duration-200">
+    <div className="flex px-4 py-2 bg-gray-300 border-4 border-gray-600 opacity-50 fixed-bl fixed-ui-component flex-center focus:opacity-100 focus-within:opacity-100 hover:opacity-100 transition ease-in-out duration-200">
       <input
         type="range"
         min={min}

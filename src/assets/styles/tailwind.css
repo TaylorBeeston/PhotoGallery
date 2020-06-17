@@ -19,6 +19,10 @@
 
 @tailwind components;
 
+.card {
+  @apply flex flex-col items-center justify-center w-3/4 h-64 px-8 mx-auto mt-8 leading-loose tracking-wide text-center text-gray-900 bg-gray-100 border rounded-lg shadow-xl;
+}
+
 .link {
   @apply flex flex-col justify-center px-8 py-4 text-gray-800 underline border rounded;
 }
@@ -60,7 +64,7 @@ input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   cursor: ew-resize;
-  @apply bg-green-300 rounded-lg w-8 h-8;
+  @apply bg-gray-300 rounded-lg w-8 h-8;
 }
 
 @tailwind utilities;

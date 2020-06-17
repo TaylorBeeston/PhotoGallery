@@ -5,9 +5,12 @@ import Photo from 'components/Photos/Photo';
 import Lightbox from 'components/Photos/Lightbox';
 import Slider from 'components/UI/Slider';
 import ZoomIcon from 'assets/images/ZoomIcon.svg';
+import StatusMessage from 'components/UI/StatusMessage';
+import Spinner from 'components/UI/Spinner';
+import NoPhotos from 'components/Photos/NoPhotos';
 
 const Photos = () => {
-  const { photos, deletePhoto } = usePhotos();
+  const { photos, deletePhoto, status } = usePhotos();
   const [lightbox, setLightbox] = useState(-1);
   const { isLoggedIn } = useContext(LoginContext);
 
@@ -17,6 +20,9 @@ const Photos = () => {
 
   return (
     <>
+      {status && <StatusMessage status={status} />}
+      {status && <Spinner />}
+      {photos.length === 0 && !status && <NoPhotos />}
       {lightbox > -1 && (
         <Lightbox
           photos={photos}

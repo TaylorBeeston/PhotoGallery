@@ -3,13 +3,16 @@ import { authFetch } from 'helpers/request.helpers';
 
 const usePhotos = () => {
   const [photos, setPhotos] = useState([]);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const getPhotos = async () => {
       try {
+        setStatus('Getting photos');
         setPhotos(await (await fetch('/api/photos')).json());
+        setStatus('');
       } catch (err) {
-        console.log(err);
+        setStatus(`Error: ${err}`);
         setTimeout(getPhotos, 1000);
       }
     };
@@ -24,11 +27,11 @@ const usePhotos = () => {
     if (response.status === 200) {
       setPhotos(photos.filter((photo) => photo.id !== id));
     } else {
-      console.log(response);
+      setStatus(`Error deleting photo: ${response}`);
     }
   };
 
-  return { photos, deletePhoto };
+  return { photos, deletePhoto, status };
 };
 
 export default usePhotos;

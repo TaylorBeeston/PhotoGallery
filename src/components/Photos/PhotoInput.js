@@ -39,13 +39,9 @@ const PhotoInput = ({ onChange }) => {
 
   return (
     <div className="flex flex-col w-full h-full flex-center">
-      <button
-        type="button"
-        onClick={addPhotos}
-        className="flex flex-center flex-col m-3 w-64 h-48 bg-gray-100 shadow-xl rounded-lg"
-      >
+      <button type="button" onClick={addPhotos} className="card">
         <img src={Icon} alt="Click Here To Add Photos" />
-        <h3 className="text-gray-900">Click Here To Add Photos</h3>
+        <h3 className="text-xl">Click Here To Add Photos</h3>
       </button>
       <input
         name="photos"
