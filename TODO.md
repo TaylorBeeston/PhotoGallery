@@ -15,7 +15,7 @@
 - [ ] Users CRUD
 - [ ] Better handling of missing environment variables
 - [ ] Make Redis optional
-- [ ] Thumbnails
+- [x] Thumbnails
 - [ ] Lazy loading
 - [ ] Touch Events
    - [ ] Swipe left/right in lightbox
