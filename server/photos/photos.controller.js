@@ -19,8 +19,12 @@ const router = Router();
  */
 router.route('/').post(json(), withAuth, async (request, response) => {
   try {
-    const { url, name } = request.body;
-    await Photo.findOneAndUpdate({ name }, { url, name }, { upsert: true });
+    const { name, url, thumbnailUrl } = request.body;
+    await Photo.findOneAndUpdate(
+      { name },
+      { url, name, thumbnailUrl },
+      { upsert: true },
+    );
     return response.status(201).send('Photo created!');
   } catch (error) {
     return response.status(400).send(error);
@@ -40,6 +44,7 @@ router.route('/').get(async (_, response) => {
       id: photo._id,
       name: photo.name,
       url: photo.url,
+      thumbnailUrl: photo.thumbnailUrl,
     })),
   );
 });

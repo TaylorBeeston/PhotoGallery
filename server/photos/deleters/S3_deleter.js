@@ -13,14 +13,18 @@ const deletePhoto = async (id) => {
     signatureVersion: 'v4',
   });
 
-  const { name } = await Photo.findOne({ _id: id });
-  await Promise.all([
+  const remove = (name) =>
     new Promise((resolve, reject) =>
       s3.deleteObject(
         { Bucket: process.env.AWS_S3_BUCKET_NAME, Key: name },
         (error, data) => (error ? reject(error) : resolve(data)),
       ),
-    ),
+    );
+
+  const { name } = await Photo.findOne({ _id: id });
+  await Promise.all([
+    remove(name),
+    remove(`thumb_${name}`),
     Photo.deleteOne({ _id: id }),
   ]);
 };

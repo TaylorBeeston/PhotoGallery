@@ -12,6 +12,7 @@ const deletePhoto = async (id) => {
   const { name } = await Photo.findOne({ _id: id });
   await Promise.all([
     fs.unlink(resolve('server', 'local', name)),
+    fs.unlink(resolve('server', 'local', `thumb_${name}`)),
     Photo.deleteOne({ _id: id }),
   ]);
 };

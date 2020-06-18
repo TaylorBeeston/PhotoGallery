@@ -16,7 +16,9 @@
  */
 
 const MAX_WIDTH = process.env.PHOTO_MAX_WIDTH || 800;
+const THUMBNAIL_WIDTH = process.env.PHOTO_THUMBNAIL_WIDTH || 20;
 const QUALITY = process.env.PHOTO_QUALITY || 0.9;
+const THUMBNAIL_QUALITY = process.env.PHOTO_THUMBNAIL_QUALITY || 0.5;
 
 /**
  * Scales a given canvas in half
@@ -163,7 +165,7 @@ const readPhoto = async (photo) => {
  * @param {File} photo - image to optimize
  * @return {blob} optimized image
  */
-export default async (photo) => {
+export const optimizePhoto = async (photo) => {
   let canvas = await readPhoto(photo);
 
   while (canvas.width >= 2 * MAX_WIDTH) {
@@ -177,4 +179,45 @@ export default async (photo) => {
   return new Promise((resolve) => {
     canvas.toBlob(resolve, 'image/jpeg', QUALITY);
   });
+};
+
+/**
+ * Generates a thumbnail using the THUMBNAIL_WIDTH and THUMBNAIL_QUALITY 
+environment variables
+ *
+ * @async
+ * @param {File} photo - image to generate thumbnail from
+ * @return {blob} thumbnail
+ */
+export const generateThumbnail = async (photo) => {
+  let canvas = await readPhoto(photo);
+
+  while (canvas.width >= 2 * THUMBNAIL_WIDTH) {
+    canvas = halfScale(canvas);
+  }
+
+  if (canvas.width > THUMBNAIL_WIDTH) {
+    canvas = bilinearInterpolate(canvas, THUMBNAIL_WIDTH / canvas.width);
+  }
+
+  return new Promise((resolve) => {
+    canvas.toBlob(resolve, 'image/jpeg', THUMBNAIL_QUALITY);
+  });
+};
+
+/**
+ * Creates a thumbnail and optimized version of a given photo
+ *
+ * @async
+ * @param {File} photo - image to generate photos from
+ * @return {blob} optimizedPhoto - optimized image
+ * @return {blob} thumbnail - thumbnail
+ */
+export const getPhotoAndThumbnail = async (photo) => {
+  const [optimizedPhoto, thumbnail] = await Promise.all([
+    optimizePhoto(photo),
+    generateThumbnail(photo),
+  ]);
+
+  return { optimizedPhoto, thumbnail };
 };

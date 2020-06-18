@@ -36,6 +36,7 @@ const Photos = () => {
             key={photo.id}
             name={photo.name}
             url={photo.url}
+            thumbnail={photo.thumbnailUrl}
             onClick={() => setLightbox(index)}
             removePhoto={() => deletePhoto(photo.id)}
             deleteable={isLoggedIn}

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import DeleteButton from 'components/UI/DeleteButton';
+import PhotoLoader from './PhotoLoader';
 
 const Photo = ({
-  name,
-  url,
-  removePhoto,
-  onClick,
+  name = '',
+  url = '',
+  thumbnail = false,
+  removePhoto = () => false,
+  onClick = () => false,
   deleteable = false,
   showName = false,
 }) => {
@@ -27,11 +29,7 @@ const Photo = ({
       className={`relative w-full h-full rounded ${animation} animation-once`}
     >
       {deleteable && <DeleteButton onClick={deleteSelf} />}
-      <img
-        src={url}
-        alt={name}
-        className="object-cover w-full h-full border rounded shadow border-grey-600"
-      />
+      <PhotoLoader url={url} name={name} thumbnailUrl={thumbnail} />
       {showName && (
         <h3 className="absolute bottom-0 px-2 bg-white border-l rounded-tr-lg opacity-75">
           {name}

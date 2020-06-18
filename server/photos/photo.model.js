@@ -11,6 +11,9 @@ const photoSchema = Schema({
     type: String,
     required: true,
   },
+  thumbnailUrl: {
+    type: String,
+  },
 });
 
 photoSchema.plugin(uniqueValidator);
