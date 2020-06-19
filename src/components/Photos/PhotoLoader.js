@@ -21,7 +21,7 @@ const PhotoLoader = ({ url, name, thumbnailUrl = false }) => {
       <img
         src={url}
         alt={name}
-        className={`object-cover w-full h-full border rounded shadow border-gray-600 ${
+        className={`object-cover w-full h-full border rounded shadow border-gray-600 min-h-32 ${
           loading && 'opacity-0'
         }`}
         onLoad={() => setLoading(false)}
