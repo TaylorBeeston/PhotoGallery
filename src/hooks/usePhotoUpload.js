@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getPhotoAndThumbnail } from 'helpers/photoOptimizer.helpers';
-import { authFetchJson, authFetchText } from 'helpers/request.helpers';
+import {
+  processPhoto,
+  uploadPhotoToStorage,
+  uploadPhotoToDatabase,
+} from 'helpers/photos/photoUploaders.helpers';
 
 const usePhotoUpload = () => {
   const [photos, setPhotos] = useState([]);
@@ -10,54 +13,28 @@ const usePhotoUpload = () => {
 
   const clearStatus = () => setStatus('');
 
-  const processPhoto = async (photo) => {
-    setStatus(`Processing ${photo.name}`);
-    const { optimizedPhoto, thumbnail } = await getPhotoAndThumbnail(photo);
-    const name = photo.name.replace(/\..*/, '.jpeg');
-    const thumbnailName = `thumb_${name}`;
-
-    return { optimizedPhoto, name, thumbnail, thumbnailName };
-  };
-
-  const sendPhotoToStorage = async (photo, name) => {
-    setStatus(`Uploading ${name}`);
-    const { signedRequest, url } = await authFetchJson(
-      `/api/uploads?name=${name}`,
-    );
-    await fetch(signedRequest, { method: 'PUT', body: photo });
-
-    return url;
-  };
-
-  const addPhotoToDatabase = async (name, url, thumbnailUrl) => {
-    setStatus(
-      await authFetchText('/api/photos', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          url,
-          thumbnailUrl,
-        }),
-      }),
-    );
-  };
-
   const uploadPhoto = async (photo) => {
+    setStatus(`Processing ${photo.name}`);
     const {
       optimizedPhoto,
-      name,
+      photoName,
       thumbnail,
       thumbnailName,
-    } = await processPhoto(photo);
+    } = await processPhoto(photo.photo);
 
+    setStatus(`Uploading ${photoName}`);
     const [photoUrl, thumbnailUrl] = await Promise.all([
-      sendPhotoToStorage(optimizedPhoto, name),
-      sendPhotoToStorage(thumbnail, thumbnailName),
+      uploadPhotoToStorage(optimizedPhoto, photoName),
+      uploadPhotoToStorage(thumbnail, thumbnailName),
     ]);
-    await addPhotoToDatabase(name, photoUrl, thumbnailUrl);
+    setStatus(
+      await uploadPhotoToDatabase(
+        photoName,
+        photoUrl,
+        thumbnailUrl,
+        photo.date.valueOf(),
+      ),
+    );
   };
 
   const uploadPhotos = async () => {

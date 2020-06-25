@@ -1,14 +1,23 @@
 import React, { useState, useRef } from 'react';
 import Icon from 'assets/images/UploadIcon.svg';
 import Photo from 'components/Photos/Photo';
+import { rotateFile } from 'helpers/photos/photo.helpers';
+import { getDatePhotoWasTaken } from 'helpers/photos/exif.helpers';
 
 const PhotoInput = ({ onChange }) => {
   const [photos, setPhotos] = useState([]);
   const input = useRef(null);
 
-  const handleChange = () => {
-    onChange([...photos, ...input.current.files]);
-    setPhotos([...photos, ...input.current.files]);
+  const handleChange = async () => {
+    const newPhotos = await Promise.all(
+      [...input.current.files].map(async (file) => ({
+        photo: await rotateFile(file),
+        name: file.name,
+        date: await getDatePhotoWasTaken(file),
+      })),
+    );
+    onChange([...photos, ...newPhotos]);
+    setPhotos([...photos, ...newPhotos]);
     input.current.files = null;
   };
 
@@ -17,7 +26,7 @@ const PhotoInput = ({ onChange }) => {
   };
 
   const removePhoto = (index) => {
-    const filteredPhotos = photos.filter((photo, i) => i !== index);
+    const filteredPhotos = photos.filter((_, i) => i !== index);
     setPhotos(filteredPhotos);
     onChange(filteredPhotos);
   };
@@ -28,7 +37,7 @@ const PhotoInput = ({ onChange }) => {
         <Photo
           key={photo.name}
           name={photo.name}
-          url={URL.createObjectURL(photo)}
+          url={URL.createObjectURL(photo.photo)}
           removePhoto={() => removePhoto(index)}
           deleteable
           showName

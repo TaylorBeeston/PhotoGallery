@@ -52,6 +52,14 @@
     "tailwindcss-animations": "^2.0.0",
     "tailwindcss-gradients": "^3.0.0"
   },
+  "exifreader": {
+    "include": {
+      "exif": [
+        "Orientation",
+        "DateTimeOriginal"
+      ]
+    }
+  },
   "scripts": {
     "start-client": "yarn build-client:css && react-scripts start",
     "build-client": "yarn build-client:css && react-scripts build",

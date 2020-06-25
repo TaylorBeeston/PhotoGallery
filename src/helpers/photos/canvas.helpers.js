@@ -15,18 +15,13 @@
  * @property {number} y - float representation of the scaled y index
  */
 
-const MAX_WIDTH = process.env.PHOTO_MAX_WIDTH || 800;
-const THUMBNAIL_WIDTH = process.env.PHOTO_THUMBNAIL_WIDTH || 20;
-const QUALITY = process.env.PHOTO_QUALITY || 0.9;
-const THUMBNAIL_QUALITY = process.env.PHOTO_THUMBNAIL_QUALITY || 0.5;
-
 /**
  * Scales a given canvas in half
  *
  * @param {canvas} canvas - canvas to scale
  * @return {canvas} scaled canvas
  */
-const halfScale = (canvas) => {
+export const halfScaleCanvas = (canvas) => {
   const halfCanvas = document.createElement('canvas');
   halfCanvas.width = canvas.width / 2;
   halfCanvas.height = canvas.height / 2;
@@ -44,7 +39,7 @@ const halfScale = (canvas) => {
  * @param {number} scale - scaling factor
  * @return {canvas} scaled canvas
  */
-const bilinearInterpolate = (sourceCanvas, scale) => {
+export const scaleCanvas = (sourceCanvas, scale) => {
   /**
    * Creates an object containing a scaled vector and its quantized points from
   a given pixel index
@@ -107,17 +102,14 @@ const bilinearInterpolate = (sourceCanvas, scale) => {
     .getContext('2d')
     .createImageData(scaledCanvas.width, scaledCanvas.height);
 
-  // eslint-disable-next-line no-plusplus
-  for (let row = 0; row < destinationImageData.height; row++) {
+  for (let row = 0; row < destinationImageData.height; row += 1) {
     const y = getQuantizedPoints(row, sourceImageData.height - 1);
 
-    // eslint-disable-next-line no-plusplus
-    for (let column = 0; column < destinationImageData.width; column++) {
+    for (let column = 0; column < destinationImageData.width; column += 1) {
       const x = getQuantizedPoints(column, sourceImageData.width - 1);
       const currentPixel = (column + destinationImageData.width * row) * 4;
 
-      // eslint-disable-next-line no-plusplus
-      for (let channel = 0; channel < 4; channel++) {
+      for (let channel = 0; channel < 4; channel += 1) {
         destinationImageData.data[currentPixel + channel] = interpolate(
           getInterpolationData(x, y, channel, sourceImageData),
         );
@@ -130,94 +122,58 @@ const bilinearInterpolate = (sourceCanvas, scale) => {
 };
 
 /**
- * Creates a canvas element from a given photo
- *
- * @async
- * @param {File} photo - image to read
- * @return {canvas} canvas element containing the read photo
+ * Returns the parameters to a CanvasRenderingContext2D object's transform method
+that will correctly rotate the context based on a given EXIF orientation value
+ * @param {number} orientation - orientation EXIF value
+ * @param {Canvas} canvas - canvas object that is being rotated
+ * @return {number[]} - CanvasRenderingContext2D.transform parameters
  */
-const readPhoto = async (photo) => {
-  const canvas = document.createElement('canvas');
-  const img = document.createElement('img');
-
-  // create img element from File object
-  img.src = await new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target.result);
-    reader.readAsDataURL(photo);
-  });
-  await new Promise((resolve) => {
-    img.onload = resolve;
-  });
-
-  // draw image in canvas element
-  canvas.width = img.width;
-  canvas.height = img.height;
-  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-
-  return canvas;
+const getRotationalTransformParams = (orientation, canvas) => {
+  switch (orientation) {
+    case 2:
+      return [-1, 0, 0, 1, canvas.width, 0];
+    case 3:
+      return [-1, 0, 0, -1, canvas.width, canvas.height];
+    case 4:
+      return [1, 0, 0, -1, 0, canvas.height];
+    case 5:
+      return [0, 1, 1, 0, 0, 0];
+    case 6:
+      return [0, 1, -1, 0, canvas.height, 0];
+    case 7:
+      return [0, -1, -1, 0, canvas.height, canvas.width];
+    case 8:
+      return [0, -1, 1, 0, 0, canvas.width];
+    default:
+      return [0, 0, 0, 0, 0, 0];
+  }
 };
 
 /**
- * Optimizes a given photo using the MAX_WIDTH and QUALITY environment variables
+ * Rotates a given canvas based on its orientation
  *
- * @async
- * @param {File} photo - image to optimize
- * @return {blob} optimized image
- */
-export const optimizePhoto = async (photo) => {
-  let canvas = await readPhoto(photo);
-
-  while (canvas.width >= 2 * MAX_WIDTH) {
-    canvas = halfScale(canvas);
-  }
-
-  if (canvas.width > MAX_WIDTH) {
-    canvas = bilinearInterpolate(canvas, MAX_WIDTH / canvas.width);
-  }
-
-  return new Promise((resolve) => {
-    canvas.toBlob(resolve, 'image/jpeg', QUALITY);
-  });
-};
-
-/**
- * Generates a thumbnail using the THUMBNAIL_WIDTH and THUMBNAIL_QUALITY 
-environment variables
+ * @param {Canvas} canvas - canvas to rotate
+ * @param {number} orientation - orientation EXIF value
+ * @return {Canvas} rotated canvas
  *
- * @async
- * @param {File} photo - image to generate thumbnail from
- * @return {blob} thumbnail
  */
-export const generateThumbnail = async (photo) => {
-  let canvas = await readPhoto(photo);
+export const rotateCanvas = (canvas, orientation = 1) => {
+  if (orientation === 1) return canvas;
 
-  while (canvas.width >= 2 * THUMBNAIL_WIDTH) {
-    canvas = halfScale(canvas);
+  const rotatedCanvas = document.createElement('canvas');
+  const ctx = rotatedCanvas.getContext('2d');
+
+  if (orientation > 4 && orientation < 9) {
+    rotatedCanvas.width = canvas.height;
+    rotatedCanvas.height = canvas.width;
+  } else {
+    rotatedCanvas.width = canvas.width;
+    rotatedCanvas.height = canvas.height;
   }
 
-  if (canvas.width > THUMBNAIL_WIDTH) {
-    canvas = bilinearInterpolate(canvas, THUMBNAIL_WIDTH / canvas.width);
-  }
+  ctx.transform(...getRotationalTransformParams(orientation, canvas));
 
-  return new Promise((resolve) => {
-    canvas.toBlob(resolve, 'image/jpeg', THUMBNAIL_QUALITY);
-  });
-};
+  ctx.drawImage(canvas, 0, 0);
 
-/**
- * Creates a thumbnail and optimized version of a given photo
- *
- * @async
- * @param {File} photo - image to generate photos from
- * @return {blob} optimizedPhoto - optimized image
- * @return {blob} thumbnail - thumbnail
- */
-export const getPhotoAndThumbnail = async (photo) => {
-  const [optimizedPhoto, thumbnail] = await Promise.all([
-    optimizePhoto(photo),
-    generateThumbnail(photo),
-  ]);
-
-  return { optimizedPhoto, thumbnail };
+  return rotatedCanvas;
 };

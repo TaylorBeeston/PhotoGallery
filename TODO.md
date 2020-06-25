@@ -4,8 +4,8 @@
 
 ## 🚀 Features
 - [ ] Update title, favicon, etc
-- [ ] Read EXIF data from photos
-- [ ] Sort Photos by Date uploaded
+- [x] Read EXIF data from photos
+- [x] Sort Photos by Date uploaded
 - [ ] Pagination
 - [ ] Infinite Scrolling
 - [x] Download Buttons
@@ -34,3 +34,6 @@
 - [x] Refactor Frontend authentication structure
   - [x] Store logged in state using React Context
   - [x] Set up ProtectedRoute component
+- [ ] Typescript
+  - [ ] Frontend
+  - [ ] Backend

@@ -14,6 +14,10 @@ const photoSchema = Schema({
   thumbnailUrl: {
     type: String,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 photoSchema.plugin(uniqueValidator);

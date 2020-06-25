@@ -19,10 +19,10 @@ const router = Router();
  */
 router.route('/').post(json(), withAuth, async (request, response) => {
   try {
-    const { name, url, thumbnailUrl } = request.body;
+    const { name, url, thumbnailUrl, date } = request.body;
     await Photo.findOneAndUpdate(
       { name },
-      { url, name, thumbnailUrl },
+      { url, name, thumbnailUrl, date },
       { upsert: true },
     );
     return response.status(201).send('Photo created!');
@@ -37,7 +37,7 @@ router.route('/').post(json(), withAuth, async (request, response) => {
  * @return {Array.{id: string, name: string, url: string}}
  */
 router.route('/').get(async (_, response) => {
-  const photos = await Photo.find();
+  const photos = await Photo.find().sort({ date: 'desc' });
   return response.status(200).json(
     photos.map((photo) => ({
       // eslint-disable-next-line no-underscore-dangle
@@ -45,6 +45,7 @@ router.route('/').get(async (_, response) => {
       name: photo.name,
       url: photo.url,
       thumbnailUrl: photo.thumbnailUrl,
+      date: photo.date,
     })),
   );
 });
