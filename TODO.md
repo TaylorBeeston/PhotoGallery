@@ -35,5 +35,5 @@
   - [x] Store logged in state using React Context
   - [x] Set up ProtectedRoute component
 - [ ] Typescript
-  - [ ] Frontend
+  - [x] Frontend
   - [ ] Backend

@@ -2,7 +2,12 @@
   "extends": [
     "airbnb",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "env": {
     "browser": true,
@@ -11,11 +16,12 @@
     "jest": true,
     "node": true
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "jsx-a11y/href-no-hash": ["off"],
     "jsx-a11y/click-events-have-key-events": ["off"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx", ".tsx"] }],
     "max-len": [
       "warn",
       {
@@ -30,12 +36,14 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "react/prop-types": ["off"]
+    "react/prop-types": ["off"],
+    "@typescript-eslint/no-non-null-assertion": 0
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "src"]
+        "moduleDirectory": ["node_modules", "src"],
+        "extenstions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   }
