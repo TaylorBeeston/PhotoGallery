@@ -1,5 +1,6 @@
 import { useState, FormEventHandler } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useStatus } from 'contexts/StatusContext';
 
 type LoginValues = {
   username: string;
@@ -7,19 +8,18 @@ type LoginValues = {
   password: string;
   setPassword: (password: string) => void;
   logIn: FormEventHandler;
-  status: string;
 };
 
 const useLogin = (): LoginValues => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
+  const { setMessage, clearMessage } = useStatus();
   const history = useHistory();
 
   const logIn: FormEventHandler = async (e) => {
     e.preventDefault();
     try {
-      setStatus('Logging In');
+      setMessage('Logging In');
       const res = await fetch('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ username, password }),
@@ -30,10 +30,11 @@ const useLogin = (): LoginValues => {
 
       localStorage.setItem('accessToken', (await res.json()).accessToken);
 
+      clearMessage();
       history.push('/');
       window.location.reload(false);
     } catch (error) {
-      setStatus('Log in failed');
+      setMessage('Log in failed');
     }
   };
 
@@ -43,7 +44,6 @@ const useLogin = (): LoginValues => {
     password,
     setPassword,
     logIn,
-    status,
   } as const;
 };
 

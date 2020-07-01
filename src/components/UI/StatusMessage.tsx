@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
-const StatusMessage: FC<{ status: string }> = ({ status }) => {
+const StatusMessage: FC<{ message: string }> = ({ message }) => {
   return (
-    <div className="w-3/4 px-4 py-2 m-2 mx-auto text-3xl text-center bg-yellow-100 rounded-lg shadow">
-      <span>{status}</span>
+    <div className="fixed bottom-0 z-50 w-screen py-4 text-3xl text-center text-white bg-gray-800 border-t-2 border-black rounded-t-lg opacity-75 pointer-events-none">
+      <span>{message}</span>
     </div>
   );
 };

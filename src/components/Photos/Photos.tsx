@@ -5,12 +5,11 @@ import Photo from 'components/Photos/Photo';
 import Lightbox from 'components/Photos/Lightbox';
 import Slider from 'components/UI/Slider';
 import ZoomIcon from 'assets/images/ZoomIcon.svg';
-import StatusMessage from 'components/UI/StatusMessage';
 import Spinner from 'components/UI/Spinner';
 import NoPhotos from 'components/Photos/NoPhotos';
 
 const Photos: FC = () => {
-  const { photos, deletePhoto, status } = usePhotos();
+  const { photos, deletePhoto, loading } = usePhotos();
   const [lightbox, setLightbox] = useState<number>(-1);
   const { isLoggedIn } = useLogin();
 
@@ -23,9 +22,8 @@ const Photos: FC = () => {
 
   return (
     <>
-      {status && <StatusMessage status={status} />}
-      {status && <Spinner />}
-      {photos.length === 0 && !status && <NoPhotos />}
+      {loading && <Spinner />}
+      {photos.length === 0 && !loading && <NoPhotos />}
 
       {lightbox > -1 && (
         <Lightbox

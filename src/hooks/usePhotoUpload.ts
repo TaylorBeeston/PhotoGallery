@@ -6,24 +6,21 @@ import {
   uploadPhotoToDatabase,
 } from 'helpers/photos/photoUploaders.helpers';
 import { PhotoFile } from 'types/photos';
+import { useStatus } from 'contexts/StatusContext';
 
 type PhotoUploadValues = {
   photos: PhotoFile[];
   setPhotos: (photos: PhotoFile[]) => void;
   uploadPhotos: () => Promise<void>;
-  status: string;
-  clearStatus: () => void;
 };
 
 const usePhotoUpload = (): PhotoUploadValues => {
   const [photos, setPhotos] = useState<PhotoFile[]>([]);
-  const [status, setStatus] = useState<string>('');
+  const { setMessage, clearMessage } = useStatus();
   const history = useHistory();
 
-  const clearStatus = () => setStatus('');
-
   const uploadPhoto = async (photo: PhotoFile): Promise<void> => {
-    setStatus(`Processing ${photo.name}`);
+    setMessage(`Processing ${photo.name}`);
     const {
       optimizedPhoto,
       photoName,
@@ -31,12 +28,12 @@ const usePhotoUpload = (): PhotoUploadValues => {
       thumbnailName,
     } = await processPhoto(photo.photo);
 
-    setStatus(`Uploading ${photoName}`);
+    setMessage(`Uploading ${photoName}`);
     const [photoUrl, thumbnailUrl] = await Promise.all([
       uploadPhotoToStorage(optimizedPhoto, photoName),
       uploadPhotoToStorage(thumbnail, thumbnailName),
     ]);
-    setStatus(
+    setMessage(
       await uploadPhotoToDatabase(
         photoName,
         photoUrl,
@@ -49,13 +46,16 @@ const usePhotoUpload = (): PhotoUploadValues => {
   const uploadPhotos = async (): Promise<void> => {
     try {
       await Promise.all(photos.map(uploadPhoto));
-      setTimeout(() => history.push('/'), 1000);
+      setTimeout(() => {
+        clearMessage();
+        history.push('/');
+      }, 1000);
     } catch (error) {
-      setStatus(error.message);
+      setMessage(error.message);
     }
   };
 
-  return { photos, setPhotos, uploadPhotos, status, clearStatus };
+  return { photos, setPhotos, uploadPhotos };
 };
 
 export default usePhotoUpload;
