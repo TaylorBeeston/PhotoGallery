@@ -36,7 +36,7 @@ const Photo: FC<PhotoProps> = ({
       aria-pressed="false"
       onClick={onClick}
       onKeyDown={(e) => onClick && e.key === 'Enter' && onClick(e)}
-      className={`relative w-full h-full rounded ${animation} animation-once`}
+      className={`relative w-full h-full max-h-screen rounded ${animation} animation-once`}
     >
       {deleteable && <DeleteButton onClick={deleteSelf} />}
 

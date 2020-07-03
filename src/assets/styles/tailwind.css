@@ -19,28 +19,30 @@
 
 @tailwind components;
 
+.frosted-glass {
+  @apply backdrop-blur;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.frosted-glass-dark {
+  @apply backdrop-blur;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .card {
-  @apply flex flex-col items-center justify-center w-3/4 h-64 px-8 mx-auto mt-8 leading-loose tracking-wide text-center text-gray-900 bg-gray-100 border rounded-lg shadow-xl;
+  @apply flex flex-col items-center justify-center w-3/4 h-64 px-8 mx-auto mt-8 leading-loose tracking-wide text-center text-gray-900 border rounded-lg shadow-xl frosted-glass;
 }
 
 .link {
-  @apply flex flex-col justify-center px-8 py-4 text-gray-800 underline border rounded;
+  @apply flex flex-col justify-center px-8 py-4 mx-1 text-gray-800 underline border rounded;
 }
 
-.fixed-ui-component {
+.btn {
   @apply flex px-8 py-4 rounded-full transition ease-in-out duration-200;
 }
 
-.green-ui-component {
-  @apply bg-green-300 border-4 border-green-600;
-}
-
-.hoverable-green-ui-component {
-  @apply bg-green-300 border-4 border-green-600 transition ease-in-out duration-200;
-}
-
-.hoverable-green-ui-component:hover {
-  @apply bg-gray-100 border-green-300;
+.btn-green {
+  @apply bg-green-300 border-2 border-green-600;
 }
 
 .fixed-br {
@@ -64,7 +66,35 @@ input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   cursor: ew-resize;
-  @apply bg-gray-300 rounded-lg w-8 h-8;
+  @apply w-8 h-8 bg-gray-300 rounded-lg;
+}
+
+.fancy-bg {
+  background: linear-gradient(
+      135deg,
+      theme('colors.gray.200') 21px,
+      theme('colors.gray.100') 22px,
+      theme('colors.gray.100') 24px,
+      transparent 24px,
+      transparent 67px,
+      theme('colors.gray.100') 67px,
+      theme('colors.gray.100') 69px,
+      transparent 69px
+    ),
+    linear-gradient(
+        225deg,
+        theme('colors.gray.200') 21px,
+        theme('colors.gray.100') 22px,
+        theme('colors.gray.100') 24px,
+        transparent 24px,
+        transparent 67px,
+        theme('colors.gray.100') 67px,
+        theme('colors.gray.100') 69px,
+        transparent 69px
+      )
+      0 64px;
+  background-color: theme('colors.gray.200');
+  background-size: 64px 128px;
 }
 
 @tailwind utilities;

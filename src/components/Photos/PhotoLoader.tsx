@@ -21,7 +21,7 @@ const PhotoLoader: FC<PhotoLoaderProps> = ({
           <img
             src={thumbnailUrl}
             alt={`loading_${name}`}
-            className="object-cover w-full h-full border border-gray-600 rounded shadow"
+            className="object-cover w-full h-full border border-gray-600 rounded shadow filter-blur"
           />
           <div className="absolute">
             <Spinner />

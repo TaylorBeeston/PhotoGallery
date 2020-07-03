@@ -8,7 +8,7 @@ const Login: FC = () => {
   return (
     <form
       onSubmit={logIn}
-      className="flex flex-col p-8 m-8 bg-gray-400 rounded-lg shadow-xl flex-center"
+      className="flex flex-col p-8 m-8 rounded-lg shadow-xl frosted-glass flex-center"
     >
       <div className="w-full md:w-2/3 lg:w-1/2">
         <fieldset>

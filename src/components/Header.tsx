@@ -26,9 +26,9 @@ const Header: FC = () => {
   }
 
   return (
-    <header className="flex justify-between p-5 border-b bg-gradient-t-gray-400">
+    <header className="relative flex justify-between p-5 border-b bg-gradient-t-gray-100 backdrop-blur">
       <Link to="/">
-        <h1 className="px-4 py-2 text-4xl subpixel-antialiased font-light tracking-wider font-title bg-radial-green-300">
+        <h1 className="px-4 py-2 text-4xl subpixel-antialiased font-light tracking-wider rounded-full font-title bg-gradient-b-gray-200">
           The Beeston Kids
         </h1>
       </Link>

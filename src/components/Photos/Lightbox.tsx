@@ -28,7 +28,7 @@ const Lightbox: FC<LightboxProps> = ({ photos, exit, startingPhoto }) => {
       onClick={nextPhoto}
       className="fixed top-0 left-0 z-10 flex w-screen min-h-screen flex-center"
     >
-      <div className="absolute w-full h-full bg-black opacity-75" />
+      <div className="absolute w-full h-full bg-black bg-opacity-75 backdrop-blur" />
       <DeleteButton onClick={animatedExit} />
       {leftArrow}
       {rightArrow}
@@ -41,7 +41,7 @@ const Lightbox: FC<LightboxProps> = ({ photos, exit, startingPhoto }) => {
         href={url}
         onClick={(event) => event.stopPropagation()}
         download
-        className="z-30 opacity-50 fixed-ui-component hoverable-green-ui-component fixed-br hover:opacity-100"
+        className="z-30 bg-opacity-50 btn btn-green fixed-br hover:bg-opacity-75 backdrop-blur"
       >
         Download
       </a>

@@ -3,7 +3,7 @@ import React, { FC, ReactEventHandler } from 'react';
 const LeftArrow: FC<{ onClick: ReactEventHandler }> = ({ onClick }) => (
   <button
     type="button"
-    className="absolute left-0 z-30 flex items-center justify-center w-16 h-24 bg-black rounded-r-lg shadow bg-opacity-50 hover:shadow-outline transition ease-in-out duration-200"
+    className="absolute left-0 z-30 flex items-center justify-center w-16 h-24 rounded-r-lg shadow frosted-glass-dark bg-opacity-50 hover:shadow-outline transition ease-in-out duration-200"
     onClick={onClick}
   >
     <div className="relative w-10 h-10">

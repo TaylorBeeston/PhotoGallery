@@ -4,7 +4,7 @@ import { LoginContextProvider } from 'contexts/LoginContext';
 
 const App: FC = () => (
   <LoginContextProvider>
-    <div className="min-h-screen bg-gradient-b-teal-100">
+    <div className="min-h-screen fancy-bg">
       <Routes />
     </div>
   </LoginContextProvider>

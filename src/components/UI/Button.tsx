@@ -11,7 +11,7 @@ const Button: FC<ButtonParams> = ({ onClick, text, icon = '' }) => {
     <button
       type="button"
       onClick={onClick}
-      className="fixed-ui-component hoverable-green-ui-component fixed-br"
+      className="btn btn-green fixed-br backdrop-blur bg-opacity-25 hover:bg-opacity-75"
     >
       {icon && <img src={icon} alt="" className="w-5 h-5 mr-2" />}
       <span className="tracking-wide">{text}</span>

@@ -57,7 +57,9 @@
     "supertest": "^4.0.2",
     "tailwindcss": "^1.4.6",
     "tailwindcss-animations": "^2.0.0",
+    "tailwindcss-filters": "^3.0.0",
     "tailwindcss-gradients": "^3.0.0",
+    "tailwindcss-spinner": "^1.0.0",
     "typescript": "^3.9.5"
   },
   "exifreader": {

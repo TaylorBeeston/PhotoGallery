@@ -135,6 +135,14 @@ module.exports = {
     radialGradientSizes: {
       default: 'closest-corner',
     },
+    spinner: (theme) => ({
+      default: {
+        color: theme('colors').gray[100],
+        size: '1rem',
+        border: '2px',
+        speed: '250ms',
+      },
+    }),
     animations: {
       'flip-entrance': {
         from: {
@@ -156,22 +164,6 @@ module.exports = {
           transform: 'rotateY(120deg) scale(0.3)',
         },
       },
-      spin: {
-        from: {
-          transform: 'rotate(0deg)',
-        },
-        to: {
-          transform: 'rotate(360deg)',
-        },
-      },
-      'circle-mask': {
-        from: {
-          'clip-path': 'circle(0% at 50% 50%)',
-        },
-        to: {
-          'clip-path': 'circle(50% at 50% 50%)',
-        },
-      },
     },
     animationDuration: {
       default: '0.3s',
@@ -180,6 +172,12 @@ module.exports = {
       '3s': '3s',
       '4s': '4s',
       '5s': '5s',
+    },
+    filter: {
+      blur: 'blur(3px)',
+    },
+    backdropFilter: {
+      blur: 'blur(3px)',
     },
     spacing: {
       px: '1px',
@@ -807,5 +805,7 @@ module.exports = {
   plugins: [
     require('tailwindcss-gradients'),
     require('tailwindcss-animations'),
+    require('tailwindcss-filters'),
+    require('tailwindcss-spinner')(),
   ],
 };
