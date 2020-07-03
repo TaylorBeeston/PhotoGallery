@@ -25,14 +25,17 @@ const Slider: FC<SliderProps> = ({
   return (
     <div className="z-40 flex px-4 py-2 border-2 border-gray-600 opacity-50 frosted-glass fixed-bl btn flex-center focus:opacity-100 focus-within:opacity-100 hover:opacity-100 transition ease-in-out duration-200">
       {icon && <img src={icon} alt="slider-icon" className="w-8 h-8 mr-2" />}
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={value}
-        onChange={update}
-        className="h-8 overflow-hidden rounded-lg appearance-none frosted-glass"
-      />
+      <label htmlFor="slider">
+        <input
+          id="slider"
+          type="range"
+          min={min}
+          max={max}
+          value={value}
+          onChange={update}
+          className="h-8 overflow-hidden rounded-lg appearance-none frosted-glass"
+        />
+      </label>
     </div>
   );
 };
