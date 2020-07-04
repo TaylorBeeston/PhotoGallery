@@ -53,6 +53,14 @@
   @apply fixed bottom-0 left-0 mb-2 ml-2;
 }
 
+.fixed-tr {
+  @apply fixed top-0 right-0 mt-2 mr-2;
+}
+
+.fixed-tl {
+  @apply fixed top-0 left-0 mt-2 ml-2;
+}
+
 .flex-center {
   @apply items-center justify-center;
 }

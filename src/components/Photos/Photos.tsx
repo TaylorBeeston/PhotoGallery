@@ -41,7 +41,7 @@ const Photos: FC = () => {
             url={url}
             thumbnail={thumbnailUrl}
             onClick={() => setLightbox(index)}
-            removePhoto={() => deletePhoto(id)}
+            remove={() => deletePhoto(id)}
             deleteable={isLoggedIn}
           />
         ))}

@@ -169,6 +169,26 @@ module.exports = {
           transform: 'rotateY(120deg) scale(0.3)',
         },
       },
+      'rotate-entrance': {
+        from: {
+          opacity: 0,
+          transform: 'rotate(-45deg) scale(0.3)',
+        },
+        to: {
+          opacity: 1,
+          transform: 'rotate(0deg) scale(1)',
+        },
+      },
+      'rotate-exit': {
+        from: {
+          opacity: 1,
+          transform: 'rotate(0deg) scale(1)',
+        },
+        to: {
+          opacity: 0,
+          transform: 'rotate(45deg) scale(0.3)',
+        },
+      },
     },
     animationDuration: {
       default: '0.3s',

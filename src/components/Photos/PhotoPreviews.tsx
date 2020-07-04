@@ -4,10 +4,11 @@ import { PhotoFile } from 'types/photos';
 
 type PhotoPreviewsProps = {
   photos: PhotoFile[];
-  removePhoto: (index: number) => void;
+  remove: (index: number) => void;
+  rotate: (index: number) => Promise<void>;
 };
 
-const PhotoPreviews: FC<PhotoPreviewsProps> = ({ photos, removePhoto }) => {
+const PhotoPreviews: FC<PhotoPreviewsProps> = ({ photos, remove, rotate }) => {
   if (photos.length === 0) return <></>;
 
   return (
@@ -17,9 +18,11 @@ const PhotoPreviews: FC<PhotoPreviewsProps> = ({ photos, removePhoto }) => {
           key={photo.name}
           name={photo.name}
           url={URL.createObjectURL(photo.photo)}
-          removePhoto={() => removePhoto(index)}
+          remove={() => remove(index)}
+          rotate={() => rotate(index)}
           deleteable
           showName
+          rotatable
         />
       ))}
     </div>

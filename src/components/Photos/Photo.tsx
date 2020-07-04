@@ -1,32 +1,47 @@
 import React, { useState, FC, ReactEventHandler } from 'react';
 import DeleteButton from 'components/UI/DeleteButton';
+import RotateButton from 'components/UI/RotateButton';
 import PhotoLoader from 'components/Photos/PhotoLoader';
 
 type PhotoProps = {
   name: string;
   url: string;
   thumbnail?: string;
-  removePhoto: () => void;
+  remove: () => void;
+  rotate?: () => Promise<void>;
   onClick?: ReactEventHandler;
   deleteable?: boolean;
   showName?: boolean;
+  rotatable?: boolean;
 };
 
 const Photo: FC<PhotoProps> = ({
   name,
   url,
   thumbnail = '',
-  removePhoto,
+  remove,
+  rotate = async () => false,
   onClick,
   deleteable = false,
   showName = false,
+  rotatable = false,
 }) => {
   const [animation, setAnimation] = useState<string>('animation-flip-entrance');
 
   const deleteSelf: ReactEventHandler = (event) => {
     event.stopPropagation();
     setAnimation('animation-flip-exit');
-    setTimeout(removePhoto, 300);
+    setTimeout(remove, 300);
+  };
+
+  const rotateSelf: ReactEventHandler = (event) => {
+    event.stopPropagation();
+    setAnimation('animation-rotate-exit');
+    setTimeout(async () => {
+      setAnimation('opacity-0');
+      await rotate();
+      setAnimation('animation-rotate-entrance');
+    }, 300);
   };
 
   return (
@@ -39,6 +54,7 @@ const Photo: FC<PhotoProps> = ({
       className={`relative w-full h-full max-h-screen rounded ${animation} animation-once`}
     >
       {deleteable && <DeleteButton onClick={deleteSelf} />}
+      {rotatable && <RotateButton onClick={rotateSelf} />}
 
       <PhotoLoader url={url} name={name} thumbnailUrl={thumbnail} />
 

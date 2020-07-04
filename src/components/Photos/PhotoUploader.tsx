@@ -5,11 +5,11 @@ import UploadToS3Icon from 'assets/images/UploadToS3Icon.svg';
 import Button from 'components/UI/Button';
 
 const PhotoUploader: FC = () => {
-  const { setPhotos, uploadPhotos } = usePhotoUpload();
+  const { photos, setPhotos, uploadPhotos } = usePhotoUpload();
 
   return (
     <div className="photo-uploads">
-      <PhotoInput onChange={setPhotos} />
+      <PhotoInput onChange={setPhotos} photos={photos} />
       <Button
         onClick={uploadPhotos}
         text="Upload Photos"

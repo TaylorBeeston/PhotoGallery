@@ -1,20 +1,20 @@
-import { useState, useRef, MutableRefObject } from 'react';
+import { useRef, MutableRefObject } from 'react';
 import { rotatePhoto } from 'helpers/photos/photo.helpers';
 import { getDatePhotoWasTaken } from 'helpers/photos/exif.helpers';
 import { PhotoFile } from 'types/photos';
 
 type PhotoInputValues = {
   input: MutableRefObject<HTMLInputElement>;
-  photos: PhotoFile[];
   selectPhotos: () => void;
   addPhotos: () => Promise<void>;
-  removePhoto: (index: number) => void;
+  remove: (index: number) => void;
+  rotate: (index: number) => Promise<void>;
 };
 
 const usePhotoInput = (
   onChange: (photos: PhotoFile[]) => void,
+  photos: PhotoFile[],
 ): PhotoInputValues => {
-  const [photos, setPhotos] = useState<PhotoFile[]>([]);
   const input = useRef<HTMLInputElement>(null!);
 
   const addPhotos = async () => {
@@ -27,7 +27,6 @@ const usePhotoInput = (
         })),
       );
       onChange([...photos, ...newPhotos]);
-      setPhotos([...photos, ...newPhotos]);
       input.current.files = null;
     }
   };
@@ -36,13 +35,20 @@ const usePhotoInput = (
     input.current.click();
   };
 
-  const removePhoto = (index: number): void => {
+  const remove = (index: number): void => {
     const filteredPhotos = photos.filter((_, i) => i !== index);
-    setPhotos(filteredPhotos);
     onChange(filteredPhotos);
   };
 
-  return { input, photos, selectPhotos, addPhotos, removePhoto };
+  const rotate = async (index: number): Promise<void> => {
+    const newPhotos = [...photos];
+    const rotatedPhoto = await rotatePhoto(photos[index].photo, 6);
+
+    newPhotos[index].photo = rotatedPhoto;
+    onChange(newPhotos);
+  };
+
+  return { input, selectPhotos, addPhotos, remove, rotate };
 };
 
 export default usePhotoInput;

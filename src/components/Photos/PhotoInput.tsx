@@ -4,11 +4,15 @@ import PhotoPreviews from 'components/Photos/PhotoPreviews';
 import usePhotoInput from 'hooks/usePhotoInput';
 import { PhotoFile } from 'types/photos';
 
-const PhotoInput: FC<{ onChange: (photos: PhotoFile[]) => void }> = ({
-  onChange,
-}) => {
-  const { input, photos, selectPhotos, addPhotos, removePhoto } = usePhotoInput(
+type PhotoInputProps = {
+  onChange: (photos: PhotoFile[]) => void;
+  photos: PhotoFile[];
+};
+
+const PhotoInput: FC<PhotoInputProps> = ({ onChange, photos }) => {
+  const { input, selectPhotos, addPhotos, remove, rotate } = usePhotoInput(
     onChange,
+    photos,
   );
 
   return (
@@ -26,7 +30,7 @@ const PhotoInput: FC<{ onChange: (photos: PhotoFile[]) => void }> = ({
         className="hidden"
         accept="image/*"
       />
-      <PhotoPreviews photos={photos} removePhoto={removePhoto} />
+      <PhotoPreviews photos={photos} remove={remove} rotate={rotate} />
     </div>
   );
 };

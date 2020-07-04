@@ -69,8 +69,11 @@ export const getPhotoAndThumbnail = async (
 /**
  * Rotates a photo based on its Orientation EXIF data
  */
-export const rotatePhoto = async (photo: File): Promise<File> => {
-  const orientation = await getOrientation(photo);
+export const rotatePhoto = async (
+  photo: File,
+  suppliedOrientation?: number,
+): Promise<File> => {
+  const orientation = suppliedOrientation ?? (await getOrientation(photo));
 
   if (orientation === 1) return photo;
 
