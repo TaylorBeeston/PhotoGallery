@@ -62,14 +62,6 @@
     "tailwindcss-spinner": "^1.0.0",
     "typescript": "^3.9.5"
   },
-  "exifreader": {
-    "include": {
-      "exif": [
-        "Orientation",
-        "DateTimeOriginal"
-      ]
-    }
-  },
   "scripts": {
     "start-client": "yarn build-client:css && react-scripts start",
     "build-client": "yarn build-client:css && react-scripts build",
