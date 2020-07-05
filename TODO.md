@@ -5,7 +5,7 @@
 ## 🚀 Features
 - [x] Update metatags
 - [x] Read EXIF data from photos
-- [ ] Add option to manually rotate image during upload
+- [x] Add option to manually rotate image during upload
 - [x] Sort Photos by Date uploaded
 - [ ] Pagination
 - [ ] Infinite Scrolling
@@ -16,7 +16,6 @@
   - [ ] HTTP/2
   - [ ] Compress build files with brotli
   - [ ] Cache-Control header sent with files to S3
-  - [ ] Save images as WebP
 - [x] Photos CRUD
 - [ ] Users CRUD
 - [ ] Better handling of missing environment variables
