@@ -15,7 +15,7 @@
 - [ ] Better Lighthouse Performance Scores
   - [ ] HTTP/2
   - [ ] Compress build files with brotli
-  - [ ] Cache-Control header sent with files to S3
+  - [x] Cache-Control header sent with files to S3
 - [x] Photos CRUD
 - [ ] Users CRUD
 - [ ] Better handling of missing environment variables

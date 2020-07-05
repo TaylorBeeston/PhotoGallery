@@ -26,7 +26,13 @@ export const uploadPhotoToStorage = async (
     signedRequest: string;
     url: string;
   }>(`/api/uploads?name=${name}`);
-  await fetch(signedRequest, { method: 'PUT', body: photo });
+  await fetch(signedRequest, {
+    method: 'PUT',
+    headers: {
+      'Cache-Control': `public, max-age=${30 * 24 * 60 * 60}`,
+    },
+    body: photo,
+  });
 
   return url;
 };
