@@ -1,6 +1,6 @@
-import React, { useState, FC, ReactEventHandler } from 'react';
+import React, { useState, FC, ReactEventHandler, SyntheticEvent } from 'react';
 import DeleteButton from 'components/UI/DeleteButton';
-import RotateButton from 'components/UI/RotateButton';
+import ToolTray from 'components/UI/ToolTray';
 import PhotoLoader from 'components/Photos/PhotoLoader';
 
 type PhotoProps = {
@@ -8,7 +8,7 @@ type PhotoProps = {
   url: string;
   thumbnail?: string;
   remove: () => void;
-  rotate?: () => Promise<void>;
+  rotate?: (clockwise?: boolean) => Promise<void>;
   onClick?: ReactEventHandler;
   deleteable?: boolean;
   showName?: boolean;
@@ -34,13 +34,19 @@ const Photo: FC<PhotoProps> = ({
     setTimeout(remove, 300);
   };
 
-  const rotateSelf: ReactEventHandler = (event) => {
+  const rotateSelf = (event: SyntheticEvent, clockwise?: boolean): void => {
     event.stopPropagation();
-    setAnimation('animation-rotate-exit');
+    setAnimation(
+      clockwise ? 'animation-rotate-exit-cw' : 'animation-rotate-exit-ccw',
+    );
     setTimeout(async () => {
       setAnimation('opacity-0');
-      await rotate();
-      setAnimation('animation-rotate-entrance');
+      await rotate(clockwise);
+      setAnimation(
+        clockwise
+          ? 'animation-rotate-entrance-cw'
+          : 'animation-rotate-entrance-ccw',
+      );
     }, 300);
   };
 
@@ -54,7 +60,7 @@ const Photo: FC<PhotoProps> = ({
       className={`relative w-full h-full max-h-screen rounded ${animation} animation-once`}
     >
       {deleteable && <DeleteButton onClick={deleteSelf} />}
-      {rotatable && <RotateButton onClick={rotateSelf} />}
+      {rotatable && <ToolTray rotate={rotateSelf} />}
 
       <PhotoLoader url={url} name={name} thumbnailUrl={thumbnail} />
 

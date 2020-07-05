@@ -8,7 +8,7 @@ type PhotoInputValues = {
   selectPhotos: () => void;
   addPhotos: () => Promise<void>;
   remove: (index: number) => void;
-  rotate: (index: number) => Promise<void>;
+  rotate: (index: number, clockwise?: boolean) => Promise<void>;
 };
 
 const usePhotoInput = (
@@ -40,9 +40,12 @@ const usePhotoInput = (
     onChange(filteredPhotos);
   };
 
-  const rotate = async (index: number): Promise<void> => {
+  const rotate = async (index: number, clockwise = true): Promise<void> => {
     const newPhotos = [...photos];
-    const rotatedPhoto = await rotatePhoto(photos[index].photo, 6);
+    const rotatedPhoto = await rotatePhoto(
+      photos[index].photo,
+      clockwise ? 6 : 8,
+    );
 
     newPhotos[index].photo = rotatedPhoto;
     onChange(newPhotos);

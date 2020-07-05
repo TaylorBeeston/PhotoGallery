@@ -169,7 +169,7 @@ module.exports = {
           transform: 'rotateY(120deg) scale(0.3)',
         },
       },
-      'rotate-entrance': {
+      'rotate-entrance-cw': {
         from: {
           opacity: 0,
           transform: 'rotate(-45deg) scale(0.3)',
@@ -179,7 +179,7 @@ module.exports = {
           transform: 'rotate(0deg) scale(1)',
         },
       },
-      'rotate-exit': {
+      'rotate-exit-cw': {
         from: {
           opacity: 1,
           transform: 'rotate(0deg) scale(1)',
@@ -187,6 +187,26 @@ module.exports = {
         to: {
           opacity: 0,
           transform: 'rotate(45deg) scale(0.3)',
+        },
+      },
+      'rotate-entrance-ccw': {
+        from: {
+          opacity: 0,
+          transform: 'rotate(45deg) scale(0.3)',
+        },
+        to: {
+          opacity: 1,
+          transform: 'rotate(0deg) scale(1)',
+        },
+      },
+      'rotate-exit-ccw': {
+        from: {
+          opacity: 1,
+          transform: 'rotate(0deg) scale(1)',
+        },
+        to: {
+          opacity: 0,
+          transform: 'rotate(-45deg) scale(0.3)',
         },
       },
     },
@@ -653,6 +673,7 @@ module.exports = {
       'top-left': 'top left',
     },
     scale: {
+      mirror: '-1',
       '0': '0',
       '50': '.5',
       '75': '.75',

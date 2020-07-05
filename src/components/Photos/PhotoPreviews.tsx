@@ -5,7 +5,7 @@ import { PhotoFile } from 'types/photos';
 type PhotoPreviewsProps = {
   photos: PhotoFile[];
   remove: (index: number) => void;
-  rotate: (index: number) => Promise<void>;
+  rotate: (index: number, clockwise?: boolean) => Promise<void>;
 };
 
 const PhotoPreviews: FC<PhotoPreviewsProps> = ({ photos, remove, rotate }) => {
@@ -19,7 +19,7 @@ const PhotoPreviews: FC<PhotoPreviewsProps> = ({ photos, remove, rotate }) => {
           name={photo.name}
           url={URL.createObjectURL(photo.photo)}
           remove={() => remove(index)}
-          rotate={() => rotate(index)}
+          rotate={(clockwise?: boolean) => rotate(index, clockwise)}
           deleteable
           showName
           rotatable
