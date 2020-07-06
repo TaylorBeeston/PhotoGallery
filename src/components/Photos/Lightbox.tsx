@@ -5,11 +5,17 @@ import { Photo } from 'types/photos';
 
 type LightboxProps = {
   photos: Photo[];
-  exit: () => void;
+  exit(): void;
   startingPhoto: number;
+  getNextPage(): void;
 };
 
-const Lightbox: FC<LightboxProps> = ({ photos, exit, startingPhoto }) => {
+const Lightbox: FC<LightboxProps> = ({
+  photos,
+  exit,
+  startingPhoto,
+  getNextPage,
+}) => {
   const {
     animation,
     animatedExit,
@@ -18,7 +24,7 @@ const Lightbox: FC<LightboxProps> = ({ photos, exit, startingPhoto }) => {
     name,
     leftArrow,
     rightArrow,
-  } = useLightbox({ startingPhoto, photos, exit });
+  } = useLightbox({ startingPhoto, photos, exit, getNextPage });
 
   return (
     <div

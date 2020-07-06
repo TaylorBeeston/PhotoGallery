@@ -1,7 +1,5 @@
-import React, { useState, FC } from 'react';
-import { useLogin } from 'contexts/LoginContext';
+import React, { FC } from 'react';
 import usePhotos from 'hooks/usePhotos';
-import Photo from 'components/Photos/Photo';
 import Lightbox from 'components/Photos/Lightbox';
 import Slider from 'components/UI/Slider';
 import ZoomIcon from 'assets/images/ZoomIcon.svg';
@@ -9,45 +7,40 @@ import Spinner from 'components/UI/Spinner';
 import NoPhotos from 'components/Photos/NoPhotos';
 
 const Photos: FC = () => {
-  const { photos, deletePhoto, loading } = usePhotos();
-  const [lightbox, setLightbox] = useState<number>(-1);
-  const { isLoggedIn } = useLogin();
+  const {
+    photos,
+    photoComponents,
+    thereIsNoPhotos,
+    updateZoom,
+    loading,
+    getNextPage,
+    lightbox,
+  } = usePhotos();
 
-  const updateZoom = (zoomValue: number): void => {
-    document.documentElement.style.setProperty(
-      '--min-photo-size',
-      `${zoomValue}px`,
-    );
-  };
+  if (thereIsNoPhotos) return <NoPhotos />;
 
   return (
     <>
-      {loading && <Spinner />}
-      {photos.length === 0 && !loading && <NoPhotos />}
-
-      {lightbox > -1 && (
+      {lightbox.isShown && (
         <Lightbox
           photos={photos}
-          startingPhoto={lightbox}
-          exit={() => setLightbox(-1)}
+          startingPhoto={lightbox.startingPhoto}
+          exit={lightbox.hide}
+          getNextPage={getNextPage}
         />
       )}
 
-      <div className={`p-2 photo-grid ${lightbox > -1 ? 'hidden' : ''}`}>
-        {photos.map(({ id, name, url, thumbnailUrl }, index) => (
-          <Photo
-            key={id}
-            name={name}
-            url={url}
-            thumbnail={thumbnailUrl}
-            onClick={() => setLightbox(index)}
-            remove={() => deletePhoto(id)}
-            deleteable={isLoggedIn}
-          />
-        ))}
+      <div className={`p-2 photo-grid ${lightbox.isShown ? 'hidden' : ''}`}>
+        {photoComponents}
       </div>
 
-      {lightbox === -1 && (
+      {loading && (
+        <div className="h-20 bg-gray-900 bg-opacity-25 card">
+          <Spinner />
+        </div>
+      )}
+
+      {!lightbox.isShown && (
         <Slider
           min={30}
           max={300}

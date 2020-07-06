@@ -32,22 +32,37 @@ router.route('/').post(json(), withAuth, async (request, response) => {
 });
 
 /**
- * Gets all photos from the database
+ * Gets paginated photos from the database
  *
  * @return {Array.{id: string, name: string, url: string}}
  */
-router.route('/').get(async (_, response) => {
-  const photos = await Photo.find().sort({ date: 'desc' });
-  return response.status(200).json(
-    photos.map((photo) => ({
-      // eslint-disable-next-line no-underscore-dangle
-      id: photo._id,
-      name: photo.name,
-      url: photo.url,
-      thumbnailUrl: photo.thumbnailUrl,
-      date: photo.date,
-    })),
-  );
+router.route('/:page?').get(async (request, response) => {
+  try {
+    const page = request.params.page || 1;
+    const photos = await Photo.find(null, null, {
+      skip: (page - 1) * 10,
+      limit: 10,
+    }).sort({
+      date: 'desc',
+    });
+
+    if (photos.length > 0) {
+      return response.status(200).json(
+        photos.map((photo) => ({
+          // eslint-disable-next-line no-underscore-dangle
+          id: photo._id,
+          name: photo.name,
+          url: photo.url,
+          thumbnailUrl: photo.thumbnailUrl,
+          date: photo.date,
+        })),
+      );
+    }
+
+    return response.status(204).send('empty page');
+  } catch (error) {
+    return response.status(400).send(error.message);
+  }
 });
 
 /**

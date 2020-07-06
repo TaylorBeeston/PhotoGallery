@@ -6,7 +6,8 @@ import { Photo } from 'types/photos';
 type useLightboxParams = {
   startingPhoto: number;
   photos: Photo[];
-  exit: () => void;
+  exit(): void;
+  getNextPage(): void;
 };
 
 type LightboxValues = {
@@ -24,6 +25,7 @@ const useLightbox = ({
   startingPhoto,
   photos,
   exit,
+  getNextPage,
 }: useLightboxParams): LightboxValues => {
   const [animation, setAnimation] = useState<string>('animation-flip-entrance');
   const [current, setCurrent] = useState<number>(startingPhoto);
@@ -36,7 +38,8 @@ const useLightbox = ({
 
   const nextPhoto: ReactEventHandler = (event) => {
     event.stopPropagation();
-    if (current + 1 === photos.length) animatedExit(event);
+    if (current === photos.length - 1) animatedExit(event);
+    if (photos.length > 3 && current === photos.length - 3) getNextPage();
     setCurrent((oldCurrent) => Math.min(photos.length - 1, oldCurrent + 1));
   };
 
