@@ -39,12 +39,12 @@ router.route('/').post(json(), withAuth, async (request, response) => {
 router.route('/:page?').get(async (request, response) => {
   try {
     const page = request.params.page || 1;
-    const photos = await Photo.find(null, null, {
-      skip: (page - 1) * 10,
-      limit: 10,
-    }).sort({
-      date: 'desc',
-    });
+    const photos = await Photo.find()
+      .sort({
+        date: 'desc',
+      })
+      .limit(10)
+      .skip((page - 1) * 10);
 
     if (photos.length > 0) {
       return response.status(200).json(
