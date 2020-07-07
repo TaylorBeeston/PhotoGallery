@@ -71,7 +71,15 @@ const Photo = forwardRef<HTMLDivElement, PhotoProps>(
         className={`relative w-full h-full max-h-screen rounded ${animation} animation-once`}
         ref={ref}
       >
-        {deleteable && <DeleteButton onClick={deleteSelf} />}
+        {deleteable && (
+          <DeleteButton
+            onClick={deleteSelf}
+            confirmation={{
+              title: `Are you sure you want to delete ${name}?`,
+              image: { src: url, alt: name },
+            }}
+          />
+        )}
         {rotatable && <ToolTray rotate={rotateSelf} />}
 
         <PhotoLoader url={url} name={name} thumbnailUrl={thumbnail} />

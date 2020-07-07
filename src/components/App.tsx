@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import Routes from 'components/Routes';
-import { LoginContextProvider } from 'contexts/LoginContext';
+import TopLevelProviders from 'providers/TopLevelProviders';
 
 const App: FC = () => (
-  <LoginContextProvider>
+  <TopLevelProviders>
     <div className="min-h-screen fancy-bg">
       <Routes />
     </div>
-  </LoginContextProvider>
+  </TopLevelProviders>
 );
 
 export default App;
