@@ -141,7 +141,7 @@ const parseExifDateString = (exifDate: string): Date => {
   const [hour, minute, second] = time.split(':');
   return new Date(
     Number(year),
-    Number(month),
+    Number(month) - 1,
     Number(day),
     Number(hour),
     Number(minute),
