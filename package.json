@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
+    "@babel/core": "^7.10.4",
     "@babel/node": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "aws-sdk": "^2.678.0",
