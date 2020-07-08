@@ -7,8 +7,8 @@
 - [x] Read EXIF data from photos
 - [x] Add option to manually rotate image during upload
 - [x] Sort Photos by Date uploaded
-- [ ] Pagination
-- [ ] Infinite Scrolling
+- [x] Pagination
+- [x] Infinite Scrolling
 - [x] Download Buttons
    - [ ] Create API endpoint for photo downloads instead of relying on download attribute
 - [ ] HTTPS
