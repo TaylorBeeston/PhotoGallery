@@ -42,9 +42,9 @@ const Photos: FC = () => {
 
       {!lightbox.isShown && (
         <Slider
-          min={30}
-          max={300}
-          defaultValue={240}
+          min={15}
+          max={60}
+          defaultValue={15}
           onChange={updateZoom}
           icon={ZoomIcon}
         />

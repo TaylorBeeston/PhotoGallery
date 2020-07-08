@@ -74,7 +74,7 @@ const usePhotos = (): PhotosValues => {
   const updateZoom = (zoomValue: number): void => {
     document.documentElement.style.setProperty(
       '--min-photo-size',
-      `${zoomValue}px`,
+      `${zoomValue}%`,
     );
   };
 
