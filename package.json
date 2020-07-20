@@ -59,7 +59,7 @@
     "tailwindcss-filters": "^3.0.0",
     "tailwindcss-gradients": "^3.0.0",
     "tailwindcss-spinner": "^1.2.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start-client": "yarn build-client:css && react-scripts start",
