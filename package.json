@@ -12,7 +12,7 @@
     "@babel/core": "^7.10.5",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
-    "aws-sdk": "^2.714.0",
+    "aws-sdk": "^2.715.0",
     "bcrypt": "^5.0.0",
     "chalk": "^4.0.0",
     "cookie-parser": "^1.4.5",
