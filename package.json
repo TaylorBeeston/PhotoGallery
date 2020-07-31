@@ -93,5 +93,10 @@
   },
   "nodemonConfig": {
     "ignore": ["src/*"]
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "version": "latest"
+    }
   }
 }
