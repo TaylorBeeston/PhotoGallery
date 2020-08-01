@@ -22,6 +22,7 @@ const Lightbox: FC<LightboxProps> = ({
     nextPhoto,
     url,
     name,
+    date,
     leftArrow,
     rightArrow,
   } = useLightbox({ startingPhoto, photos, exit, getNextPage });
@@ -41,8 +42,11 @@ const Lightbox: FC<LightboxProps> = ({
       <img
         src={url}
         alt={name}
-        className={`relative z-20 w-screen md:h-screen md:w-auto ${animation} animation-once`}
+        className={`relative z-20 max-h-screen max-w-screen object-cover h-auto w-screen md:h-screen md:w-auto ${animation} animation-once`}
       />
+      <span className="z-30 p-2 mb-4 ml-4 text-white rounded frosted-glass-dark fixed-bl">
+        {date.toLocaleDateString()}
+      </span>
       <a
         href={url}
         onClick={(event) => event.stopPropagation()}

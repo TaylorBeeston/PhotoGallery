@@ -17,6 +17,7 @@ type LightboxValues = {
   previousPhoto: ReactEventHandler;
   url: string;
   name: string;
+  date: Date;
   leftArrow: ReactNode;
   rightArrow: ReactNode;
 };
@@ -61,6 +62,7 @@ const useLightbox = ({
     previousPhoto,
     url: photos[current].url,
     name: photos[current].name,
+    date: new Date(photos[current].date),
     leftArrow,
     rightArrow,
   } as const;

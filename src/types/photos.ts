@@ -3,6 +3,7 @@ export type Photo = {
   name: string;
   url: string;
   thumbnailUrl: string;
+  date: string;
 };
 
 export type PhotoFile = {
