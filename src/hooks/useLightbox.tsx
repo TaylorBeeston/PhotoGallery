@@ -1,13 +1,11 @@
 import React, { useState, ReactNode, ReactEventHandler } from 'react';
+import { usePhotos } from 'contexts/PhotosContext';
 import RightArrow from 'components/UI/RightArrow';
 import LeftArrow from 'components/UI/LeftArrow';
-import { Photo } from 'types/photos';
 
 type useLightboxParams = {
   startingPhoto: number;
-  photos: Photo[];
   exit(): void;
-  getNextPage(): void;
 };
 
 type LightboxValues = {
@@ -24,10 +22,9 @@ type LightboxValues = {
 
 const useLightbox = ({
   startingPhoto,
-  photos,
   exit,
-  getNextPage,
 }: useLightboxParams): LightboxValues => {
+  const { photos, getNextPage } = usePhotos();
   const [animation, setAnimation] = useState<string>('animation-flip-entrance');
   const [current, setCurrent] = useState<number>(startingPhoto);
 

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import usePhotos from 'hooks/usePhotos';
+import usePhotosIndex from 'hooks/usePhotosIndex';
 import Lightbox from 'components/Photos/Lightbox';
 import Slider from 'components/UI/Slider';
 import ZoomIcon from 'assets/images/ZoomIcon.svg';
@@ -8,33 +8,26 @@ import NoPhotos from 'components/Photos/NoPhotos';
 
 const Photos: FC = () => {
   const {
-    photos,
     photoComponents,
     thereIsNoPhotos,
     updateZoom,
-    loading,
-    getNextPage,
+    isLoading,
     lightbox,
-  } = usePhotos();
+  } = usePhotosIndex();
 
   if (thereIsNoPhotos) return <NoPhotos />;
 
   return (
     <>
       {lightbox.isShown && (
-        <Lightbox
-          photos={photos}
-          startingPhoto={lightbox.startingPhoto}
-          exit={lightbox.hide}
-          getNextPage={getNextPage}
-        />
+        <Lightbox startingPhoto={lightbox.startingPhoto} exit={lightbox.hide} />
       )}
 
       <div className={`p-2 photo-grid ${lightbox.isShown ? 'hidden' : ''}`}>
         {photoComponents}
       </div>
 
-      {loading && (
+      {isLoading && (
         <div className="h-20 bg-gray-900 bg-opacity-25 card">
           <Spinner />
         </div>

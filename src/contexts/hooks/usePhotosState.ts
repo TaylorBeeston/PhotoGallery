@@ -1,36 +1,27 @@
-import React, { useState, useEffect, ReactNodeArray } from 'react';
+import { useState, useEffect, MutableRefObject } from 'react';
 import { Photo } from 'types/photos';
-import { useLogin } from 'contexts/LoginContext';
 import { useStatus } from 'contexts/StatusContext';
 import { authFetch } from 'helpers/request.helpers';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import useLightboxWrapper, {
-  LightboxWrapperValues,
-} from 'hooks/useLightboxWrapper';
-import PhotoComponent from 'components/Photos/Photo';
 
-type PhotosValues = {
+export type PhotosValues = {
   photos: Photo[];
-  photoComponents: ReactNodeArray;
-  thereIsNoPhotos: boolean;
-  updateZoom(zoomValue: number): void;
-  loading: boolean;
+  isLoading: boolean;
   getNextPage(): void;
-  lightbox: LightboxWrapperValues;
+  requestTriggeringElement: MutableRefObject<HTMLDivElement>;
+  deletePhoto(id: string): Promise<void>;
 };
 
-const usePhotos = (): PhotosValues => {
-  const { isLoggedIn } = useLogin();
+const usePhotosState = (): PhotosValues => {
   const { setMessage, clearMessage } = useStatus();
   const {
     currentPage,
     setMoreToLoad,
-    loading,
+    isLoading,
     setLoading,
     requestTriggeringElement,
     getNextPage,
   } = useInfiniteScroll();
-  const lightbox = useLightboxWrapper();
   const [photos, setPhotos] = useState<Photo[]>([]);
 
   useEffect((): void => {
@@ -56,7 +47,6 @@ const usePhotos = (): PhotosValues => {
     };
 
     getPhotos(currentPage);
-    // eslint-disable-next-line
   }, [currentPage]);
 
   const deletePhoto = async (id: string): Promise<void> => {
@@ -71,43 +61,13 @@ const usePhotos = (): PhotosValues => {
     }
   };
 
-  const updateZoom = (zoomValue: number): void => {
-    document.documentElement.style.setProperty(
-      '--min-photo-size',
-      `${zoomValue}%`,
-    );
-  };
-
-  const photoComponents = photos.map(
-    ({ id, name, url, thumbnailUrl }, index) => (
-      <PhotoComponent
-        key={id}
-        name={name}
-        url={url}
-        thumbnail={thumbnailUrl}
-        onClick={() => lightbox.show(index)}
-        remove={() => deletePhoto(id)}
-        deleteable={isLoggedIn}
-        ref={
-          photos.length > 3 && index === photos.length - 3
-            ? requestTriggeringElement
-            : undefined
-        }
-      />
-    ),
-  );
-
-  const thereIsNoPhotos = photos.length === 0 && !loading;
-
   return {
     photos,
-    photoComponents,
-    thereIsNoPhotos,
-    updateZoom,
-    loading,
+    isLoading,
     getNextPage,
-    lightbox,
+    requestTriggeringElement,
+    deletePhoto,
   } as const;
 };
 
-export default usePhotos;
+export default usePhotosState;

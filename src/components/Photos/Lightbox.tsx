@@ -1,21 +1,13 @@
 import React, { FC } from 'react';
 import useLightbox from 'hooks/useLightbox';
 import DeleteButton from 'components/UI/DeleteButton';
-import { Photo } from 'types/photos';
 
 type LightboxProps = {
-  photos: Photo[];
   exit(): void;
   startingPhoto: number;
-  getNextPage(): void;
 };
 
-const Lightbox: FC<LightboxProps> = ({
-  photos,
-  exit,
-  startingPhoto,
-  getNextPage,
-}) => {
+const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
   const {
     animation,
     animatedExit,
@@ -25,7 +17,7 @@ const Lightbox: FC<LightboxProps> = ({
     date,
     leftArrow,
     rightArrow,
-  } = useLightbox({ startingPhoto, photos, exit, getNextPage });
+  } = useLightbox({ startingPhoto, exit });
 
   return (
     <div

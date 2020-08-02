@@ -4,7 +4,7 @@ import useOnScreen from 'hooks/useOnScreen';
 type InfiniteScrollValues = {
   currentPage: number;
   setMoreToLoad(more: boolean): void;
-  loading: boolean;
+  isLoading: boolean;
   setLoading(loading: boolean): void;
   requestTriggeringElement: MutableRefObject<HTMLDivElement>;
   getNextPage(): void;
@@ -13,13 +13,13 @@ type InfiniteScrollValues = {
 const useInfiniteScroll = (): InfiniteScrollValues => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moreToLoad, setMoreToLoad] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   const requestTriggeringElement = useRef<HTMLDivElement>(null!);
   const onScreen = useOnScreen(requestTriggeringElement, '0px');
 
   const getNextPage = (): void => {
-    if (moreToLoad && !loading) {
+    if (moreToLoad && !isLoading) {
       setCurrentPage((oldPage) => oldPage + 1);
       setLoading(true);
     }
@@ -30,7 +30,7 @@ const useInfiniteScroll = (): InfiniteScrollValues => {
   return {
     currentPage,
     setMoreToLoad,
-    loading,
+    isLoading,
     setLoading,
     requestTriggeringElement,
     getNextPage,

@@ -1,7 +1,7 @@
 import React, { ReactNode, FC } from 'react';
 import createCtx from 'helpers/context.helpers';
-import useLoggedIn from 'hooks/useLoggedIn';
-import useLogout from 'hooks/useLogout';
+import useLoggedIn from 'contexts/hooks/useLoggedIn';
+import useLogout from 'contexts/hooks/useLogout';
 
 export const [useLogin, Provider] = createCtx<{
   isLoggedIn: boolean;
