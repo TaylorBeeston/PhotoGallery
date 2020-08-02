@@ -4,7 +4,7 @@ import PhotoInput from 'components/Photos/PhotoInput';
 import UploadToS3Icon from 'assets/images/UploadToS3Icon.svg';
 import Button from 'components/UI/Button';
 
-const PhotoUploader: FC = () => {
+const PhotoUploads: FC = () => {
   const { photos, setPhotos, uploadPhotos } = usePhotoUpload();
 
   return (
@@ -19,4 +19,4 @@ const PhotoUploader: FC = () => {
   );
 };
 
-export default PhotoUploader;
+export default PhotoUploads;

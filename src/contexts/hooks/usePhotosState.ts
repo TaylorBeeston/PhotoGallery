@@ -47,6 +47,7 @@ const usePhotosState = (): PhotosValues => {
     };
 
     getPhotos(currentPage);
+    // eslint-disable-next-line
   }, [currentPage]);
 
   const deletePhoto = async (id: string): Promise<void> => {

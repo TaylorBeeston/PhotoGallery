@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PhotoUploader from 'components/Photos/PhotoUploader';
-import Photos from 'components/Photos/Photos';
+import PhotoUploads from 'pages/PhotoUploads';
+import PhotosIndex from 'pages/PhotosIndex';
 import Header from 'components/Header';
-import Login from 'components/Login';
+import Login from 'pages/Login';
 import ProtectedRoute from 'components/ProtectedRoute';
 
 const Routes: FC = () => {
@@ -12,8 +12,8 @@ const Routes: FC = () => {
       <Header />
       <Switch>
         <Route path="/login" component={Login} />
-        <ProtectedRoute path="/upload" component={PhotoUploader} />
-        <Route exact path="/" component={Photos} />
+        <ProtectedRoute path="/upload" component={PhotoUploads} />
+        <Route exact path="/" component={PhotosIndex} />
       </Switch>
     </Router>
   );

@@ -6,7 +6,7 @@ import ZoomIcon from 'assets/images/ZoomIcon.svg';
 import Spinner from 'components/UI/Spinner';
 import NoPhotos from 'components/Photos/NoPhotos';
 
-const Photos: FC = () => {
+const PhotosIndex: FC = () => {
   const {
     photoComponents,
     thereIsNoPhotos,
@@ -46,4 +46,4 @@ const Photos: FC = () => {
   );
 };
 
-export default Photos;
+export default PhotosIndex;
