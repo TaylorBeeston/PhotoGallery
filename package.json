@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "inquirer": "^7.3.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.26",
+    "mongoose": "^5.9.27",
     "mongoose-unique-validator": "^2.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
