@@ -1,5 +1,9 @@
 import React, { FC } from 'react';
+import Hammer from 'react-hammerjs';
 import useLightbox from 'hooks/useLightbox';
+import DeleteButton from 'components/UI/DeleteButton';
+import RightArrow from 'components/UI/RightArrow';
+import LeftArrow from 'components/UI/LeftArrow';
 
 type LightboxProps = {
   exit(): void;
@@ -7,43 +11,37 @@ type LightboxProps = {
 };
 
 const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
-  const {
-    animation,
-    nextPhoto,
-    url,
-    name,
-    date,
-    controls,
-    TouchEventsWrapper,
-  } = useLightbox({
+  const { animation, photo, controls } = useLightbox({
     startingPhoto,
     exit,
   });
 
   return (
-    <TouchEventsWrapper>
+    <Hammer
+      onSwipeLeft={controls.nextPhoto}
+      onSwipeRight={controls.previousPhoto}
+    >
       <div
         role="button"
         tabIndex={0}
         aria-pressed="true"
-        onClick={(event) => {
-          event.stopPropagation();
-          nextPhoto();
-        }}
+        onClick={controls.nextPhoto}
         className="fixed top-0 left-0 z-10 flex w-screen min-h-screen flex-center"
       >
         <div className="absolute w-full h-full bg-black bg-opacity-75 backdrop-blur" />
-        {controls}
+        <DeleteButton onClick={animation.animatedExit} />
+        {controls.rightArrow && <RightArrow onClick={controls.nextPhoto} />}
+        {controls.leftArrow && <LeftArrow onClick={controls.previousPhoto} />}
         <img
-          src={url}
-          alt={name}
-          className={`relative z-20 max-h-screen max-w-screen object-cover h-auto w-screen md:h-screen md:w-auto ${animation} animation-once`}
+          src={photo.url}
+          alt={photo.name}
+          className={`relative z-20 max-h-screen max-w-screen object-cover h-auto w-screen md:h-screen md:w-auto ${animation.animation}`}
         />
         <span className="z-30 p-2 mb-4 ml-4 text-white rounded frosted-glass-dark fixed-bl">
-          {date.toLocaleDateString()}
+          {photo.date.toLocaleDateString()}
         </span>
         <a
-          href={url}
+          href={photo.url}
           onClick={(event) => event.stopPropagation()}
           download
           className="z-30 bg-opacity-50 btn btn-green fixed-br hover:bg-opacity-75 backdrop-blur"
@@ -51,7 +49,7 @@ const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
           Download
         </a>
       </div>
-    </TouchEventsWrapper>
+    </Hammer>
   );
 };
 

@@ -1,9 +1,5 @@
-import React, {
-  useState,
-  forwardRef,
-  ReactEventHandler,
-  SyntheticEvent,
-} from 'react';
+import React, { forwardRef, ReactEventHandler, SyntheticEvent } from 'react';
+import useAnimation from 'hooks/useAnimation';
 import DeleteButton from 'components/UI/DeleteButton';
 import ToolTray from 'components/UI/ToolTray';
 import PhotoLoader from 'components/Photos/PhotoLoader';
@@ -35,30 +31,21 @@ const Photo = forwardRef<HTMLDivElement, PhotoProps>(
     },
     ref,
   ) => {
-    const [animation, setAnimation] = useState<string>(
-      'animation-flip-entrance',
-    );
-
-    const deleteSelf: ReactEventHandler = (event) => {
-      event.stopPropagation();
-      setAnimation('animation-flip-exit');
-      setTimeout(remove, 300);
-    };
+    const { animation, animatedEvent } = useAnimation('flip-entrance');
 
     const rotateSelf = (event: SyntheticEvent, clockwise?: boolean): void => {
       event.stopPropagation();
-      setAnimation(
-        clockwise ? 'animation-rotate-exit-cw' : 'animation-rotate-exit-ccw',
+      animatedEvent(
+        clockwise ? 'rotate-exit-cw' : 'rotate-exit-ccw',
+        async () => {
+          rotate(clockwise);
+        },
+        {
+          endAnimation: clockwise
+            ? 'rotate-entrance-cw'
+            : 'rotate-entrance-ccw',
+        },
       );
-      setTimeout(async () => {
-        setAnimation('opacity-0');
-        await rotate(clockwise);
-        setAnimation(
-          clockwise
-            ? 'animation-rotate-entrance-cw'
-            : 'animation-rotate-entrance-ccw',
-        );
-      }, 300);
     };
 
     return (
@@ -68,12 +55,15 @@ const Photo = forwardRef<HTMLDivElement, PhotoProps>(
         aria-pressed="false"
         onClick={onClick}
         onKeyDown={(e) => onClick && e.key === 'Enter' && onClick(e)}
-        className={`relative w-full h-full max-h-screen rounded ${animation} animation-once`}
+        className={`relative w-full h-full max-h-screen rounded ${animation}`}
         ref={ref}
       >
         {deleteable && (
           <DeleteButton
-            onClick={deleteSelf}
+            onClick={(event) => {
+              event.stopPropagation();
+              animatedEvent('flip-exit', remove);
+            }}
             confirmation={{
               title: `Are you sure you want to delete ${name}?`,
               image: { src: url, alt: name },
