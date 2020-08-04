@@ -18,8 +18,8 @@ const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
 
   return (
     <Hammer
-      onSwipeLeft={controls.nextPhoto}
-      onSwipeRight={controls.previousPhoto}
+      onSwipeLeft={() => controls.nextPhoto()}
+      onSwipeRight={() => controls.previousPhoto()}
     >
       <div
         role="button"
