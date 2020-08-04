@@ -11,6 +11,7 @@ type LightboxValues = {
   animation: {
     animation: string;
     animatedExit(): void;
+    panHandler: HammerListener;
   };
   photo: {
     url: string;
@@ -30,8 +31,8 @@ const useLightbox = ({
   exit,
 }: useLightboxParams): LightboxValues => {
   const { photos, getNextPage } = usePhotos();
-  const { animation, animatedEvent } = useAnimation('flip-entrance', 100);
   const [current, setCurrent] = useState<number>(startingPhoto);
+  const { animation, animatedEvent } = useAnimation('flip-entrance', 100);
 
   const animatedExit = () => animatedEvent('flip-exit', exit);
 
@@ -39,9 +40,8 @@ const useLightbox = ({
     if (event) event.stopPropagation();
     if (photos.length > 3 && current >= photos.length - 3) getNextPage();
 
-    if (current === photos.length - 1) {
-      animatedExit();
-    } else {
+    if (current === photos.length - 1) animatedExit();
+    else {
       animatedEvent(
         'slide-exit-left',
         () =>
@@ -55,6 +55,8 @@ const useLightbox = ({
 
   const previousPhoto = (event?: SyntheticEvent): void => {
     if (event) event.stopPropagation();
+
+    if (current === 0) return;
 
     animatedEvent(
       'slide-exit-right',
@@ -70,8 +72,24 @@ const useLightbox = ({
     previousPhoto,
   };
 
+  const panHandler: HammerListener = (event) => {
+    const element = event.target;
+    let delta = event.deltaX;
+
+    if (current === 0) delta = Math.min(delta, 0);
+    else if (current === photos.length - 1) delta = Math.max(delta, 0);
+
+    requestAnimationFrame(() => {
+      element.style.transform = `translate(${event.isFinal ? '0' : delta}px)`;
+    });
+  };
+
   return {
-    animation: { animation, animatedExit },
+    animation: {
+      animation,
+      animatedExit,
+      panHandler,
+    },
     photo: {
       url: photos[current].url,
       name: photos[current].name,

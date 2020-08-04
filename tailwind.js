@@ -244,7 +244,7 @@ module.exports = {
         to: { transform: 'translateX(0)' },
       },
       'slide-exit-left': {
-        from: { transform: 'translateX(0)' },
+        from: {},
         to: { transform: 'translateX(-100vw)' },
       },
       'slide-entrance-right': {
@@ -252,7 +252,7 @@ module.exports = {
         to: { transform: 'translateX(0)' },
       },
       'slide-exit-right': {
-        from: { transform: 'translateX(0)' },
+        from: {},
         to: { transform: 'translateX(100vw)' },
       },
     },
