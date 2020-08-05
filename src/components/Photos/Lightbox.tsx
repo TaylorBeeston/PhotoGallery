@@ -30,12 +30,7 @@ const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
       <DeleteButton onClick={animation.animatedExit} />
       {controls.rightArrow && <RightArrow onClick={controls.nextPhoto} />}
       {controls.leftArrow && <LeftArrow onClick={controls.previousPhoto} />}
-      <Hammer
-        onSwipeLeft={() => controls.nextPhoto()}
-        onSwipeRight={() => controls.previousPhoto()}
-        onPan={animation.panHandler}
-        recognizeWith={{ swipe: 'pan' }}
-      >
+      <Hammer onPan={animation.panHandler}>
         <img
           src={photo.url}
           alt={photo.name}
