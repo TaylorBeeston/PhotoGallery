@@ -34,6 +34,7 @@ const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
         onSwipeLeft={() => controls.nextPhoto()}
         onSwipeRight={() => controls.previousPhoto()}
         onPan={animation.panHandler}
+        recognizeWith={{ swipe: 'pan' }}
       >
         <img
           src={photo.url}
