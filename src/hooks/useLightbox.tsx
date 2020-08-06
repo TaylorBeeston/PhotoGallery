@@ -73,13 +73,16 @@ const useLightbox = ({
   };
 
   const panHandler: HammerListener = (event) => {
+    event.srcEvent.stopImmediatePropagation();
     const element = event.target;
     let delta = event.deltaX;
 
     if (current === 0) delta = Math.min(delta, 0);
     else if (current === photos.length - 1) delta = Math.max(delta, 0);
 
-    element.style.transform = `translate(${event.isFinal ? '0' : delta}px)`;
+    requestAnimationFrame(() => {
+      element.style.transform = `translate(${event.isFinal ? '0' : delta}px)`;
+    });
 
     if (event.isFinal && Math.abs(delta) > event.target.clientWidth * 0.2)
       // eslint-disable-next-line no-unused-expressions
