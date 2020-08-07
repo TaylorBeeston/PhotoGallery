@@ -1,5 +1,5 @@
 :root {
-  --min-photo-size: 240px;
+  --min-photo-size: 30%;
 }
 
 @tailwind base;
@@ -34,7 +34,7 @@
 }
 
 .link {
-  @apply flex flex-col justify-center px-8 py-4 mx-1 text-gray-800 underline border rounded;
+  @apply flex flex-col justify-center px-4 py-4 mx-1 text-gray-800 underline border rounded;
 }
 
 .btn {

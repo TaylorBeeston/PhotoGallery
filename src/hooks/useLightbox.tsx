@@ -11,7 +11,6 @@ type LightboxValues = {
   animation: {
     animation: string;
     animatedExit(): void;
-    panHandler: HammerListener;
   };
   photo: {
     url: string;
@@ -23,6 +22,7 @@ type LightboxValues = {
     leftArrow: boolean;
     nextPhoto(): void;
     previousPhoto(): void;
+    panHandler: HammerListener;
   };
 };
 
@@ -34,14 +34,13 @@ const useLightbox = ({
   const [current, setCurrent] = useState<number>(startingPhoto);
   const { animation, animatedEvent } = useAnimation('flip-entrance', 100);
 
-  const animatedExit = () => animatedEvent('flip-exit', exit);
+  const animatedExit = () => animatedEvent('slide-exit-up', exit);
 
   const nextPhoto = (event?: SyntheticEvent): void => {
-    if (event) event.stopPropagation();
+    if (event) if (event.stopPropagation) event.stopPropagation();
     if (photos.length > 3 && current >= photos.length - 3) getNextPage();
 
-    if (current === photos.length - 1) animatedExit();
-    else {
+    if (current < photos.length - 1) {
       animatedEvent(
         'slide-exit-left',
         () =>
@@ -54,7 +53,7 @@ const useLightbox = ({
   };
 
   const previousPhoto = (event?: SyntheticEvent): void => {
-    if (event) event.stopPropagation();
+    if (event) if (event.stopPropagation) event.stopPropagation();
 
     if (current === 0) return;
 
@@ -65,35 +64,55 @@ const useLightbox = ({
     );
   };
 
+  const panHandler: HammerListener = (event) => {
+    event.srcEvent.stopPropagation();
+
+    let { deltaX, deltaY } = event;
+    const element = event.target;
+
+    // don't allow pan if there are no more photos in that direction
+    if (current === 0) deltaX = Math.min(deltaX, 0);
+    else if (current === photos.length - 1) deltaX = Math.max(deltaX, 0);
+
+    // only allow pan up
+    deltaY = Math.min(0, deltaY);
+
+    const deltaXPercentage = Math.abs(deltaX) / event.target.clientWidth;
+    const deltaYPercentage = Math.abs(deltaY) / event.target.clientHeight;
+    const translateXValue = event.isFinal ? 0 : deltaX;
+    const translateYValue = event.isFinal ? 0 : Math.floor(deltaY * 0.3);
+    const scaleOpacityValue = event.isFinal ? 1 : 1 - deltaYPercentage;
+
+    const transformStyle = `translateX(${translateXValue}px) 
+                            translateY(${translateYValue}px) 
+                            scale(${scaleOpacityValue})`;
+
+    if (element.style.transform !== transformStyle)
+      requestAnimationFrame(() => {
+        element.style.transform = transformStyle;
+        element.style.opacity = scaleOpacityValue.toString();
+      });
+
+    // handle letting go of pan
+    if (event.isFinal) {
+      // eslint-disable-next-line no-unused-expressions
+      if (deltaXPercentage > 0.2) deltaX > 0 ? previousPhoto() : nextPhoto();
+      else if (deltaYPercentage > 0.2) animatedExit();
+    }
+  };
+
   const controls = {
     rightArrow: current < photos.length - 1,
     leftArrow: current > 0,
     nextPhoto,
     previousPhoto,
-  };
-
-  const panHandler: HammerListener = (event) => {
-    event.srcEvent.stopImmediatePropagation();
-    const element = event.target;
-    let delta = event.deltaX;
-
-    if (current === 0) delta = Math.min(delta, 0);
-    else if (current === photos.length - 1) delta = Math.max(delta, 0);
-
-    requestAnimationFrame(() => {
-      element.style.transform = `translate(${event.isFinal ? '0' : delta}px)`;
-    });
-
-    if (event.isFinal && Math.abs(delta) > event.target.clientWidth * 0.2)
-      // eslint-disable-next-line no-unused-expressions
-      delta > 0 ? previousPhoto() : nextPhoto();
+    panHandler,
   };
 
   return {
     animation: {
       animation,
       animatedExit,
-      panHandler,
     },
     photo: {
       url: photos[current].url,

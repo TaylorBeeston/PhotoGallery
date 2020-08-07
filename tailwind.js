@@ -18,6 +18,7 @@ module.exports = {
         'animation-slide-exit-left',
         'animation-slide-entrance-right',
         'animation-slide-exit-right',
+        'animation-slide-exit-up',
         'animation-0.1s',
         'animation-0.2s',
         'animation-0.3s',
@@ -254,6 +255,13 @@ module.exports = {
       'slide-exit-right': {
         from: {},
         to: { transform: 'translateX(100vw)' },
+      },
+      'slide-exit-up': {
+        from: {},
+        to: {
+          transform: 'translateY(-30vh) scale(0.3)',
+          opacity: '0.3',
+        },
       },
     },
     animationDuration: {

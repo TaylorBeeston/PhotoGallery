@@ -17,25 +17,21 @@ const Lightbox: FC<LightboxProps> = ({ exit, startingPhoto }) => {
   });
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      aria-pressed="true"
-      onClick={(event) => {
-        if (event.type === 'click') controls.nextPhoto();
-      }}
-      className="fixed top-0 left-0 z-10 flex w-screen min-h-screen flex-center"
-    >
+    <div className="fixed top-0 left-0 z-10 flex w-screen h-screen flex-center">
       <div className="absolute w-full h-full bg-black bg-opacity-75 backdrop-blur" />
       <DeleteButton onClick={animation.animatedExit} />
       {controls.rightArrow && <RightArrow onClick={controls.nextPhoto} />}
       {controls.leftArrow && <LeftArrow onClick={controls.previousPhoto} />}
-      <Hammer onPan={animation.panHandler}>
-        <img
-          src={photo.url}
-          alt={photo.name}
-          className={`relative z-20 max-h-screen max-w-screen object-cover h-auto w-screen md:h-screen md:w-auto transition-transform duration-75 ${animation.animation}`}
-        />
+      <Hammer direction="DIRECTION_ALL" onPan={controls.panHandler}>
+        <figure
+          className={`z-20 flex flex-center h-screen w-screen transition-transform duration-75 ${animation.animation}`}
+        >
+          <img
+            className="object-cover w-screen h-auto max-h-screen max-w-screen md:h-screen md:w-auto "
+            src={photo.url}
+            alt={photo.name}
+          />
+        </figure>
       </Hammer>
       <span className="z-30 p-2 mb-4 ml-4 text-white rounded frosted-glass-dark fixed-bl">
         {photo.date.toLocaleDateString()}
