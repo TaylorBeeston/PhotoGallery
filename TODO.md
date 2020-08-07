@@ -11,9 +11,8 @@
 - [x] Infinite Scrolling
 - [x] Download Buttons
    - [ ] Create API endpoint for photo downloads instead of relying on download attribute
-- [ ] HTTPS
+- [x] HTTPS
 - [ ] Better Lighthouse Performance Scores
-  - [ ] HTTP/2
   - [ ] Compress build files with brotli
   - [x] Cache-Control header sent with files to S3
 - [x] Photos CRUD
@@ -21,15 +20,12 @@
 - [ ] Better handling of missing environment variables
 - [ ] Make Redis optional
 - [x] Thumbnails
-- [ ] Lazy loading
-- [ ] Touch Events
-   - [ ] Swipe left/right in lightbox
-   - [ ] Pinch to zoom in/out
+- [x] Touch Events
+   - [x] Swipe left/right/up in lightbox
 - [ ] Video support
 ## 🧪 Testing
 - [ ] Better test coverage
 ## 📄 Documentation
-- [ ] Formal API documentation using Swagger
 - [x] Improved README.md
 ## 🔧 Devops
 - [x] Allow for different development/testing/production environments
