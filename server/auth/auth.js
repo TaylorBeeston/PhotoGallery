@@ -25,6 +25,9 @@ export default async (request, response, next) => {
     if (error.name === 'TokenExpiredError')
       return verifyAndUpdateTokens({ response, refreshToken });
 
-    return response.status(401).send('Unauthorized: Invalid token');
+    return response
+      .clearCookie('token', { httpOnly: true })
+      .status(401)
+      .send('Unauthorized: Invalid token');
   }
 };

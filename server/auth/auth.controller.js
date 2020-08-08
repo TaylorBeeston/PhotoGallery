@@ -17,6 +17,8 @@ router.route('/login').post(json(), async (request, response) => {
   const { username, password } = request.body;
   try {
     const user = await User.findOne({ username });
+    if (!user) return response.status(401).send('Invalid username or password');
+
     if (await user.isCorrectPassword(password)) {
       const { refreshToken, accessToken } = newTokens(username);
 
@@ -28,9 +30,10 @@ router.route('/login').post(json(), async (request, response) => {
       });
     }
 
-    return response.status(401).send('Incorrect email or password');
+    return response.status(401).send('Invalid username or password');
   } catch (error) {
-    return response.status(400).send(error);
+    console.log('Error handling login: ', error);
+    return response.status(400).send('Internal Server Error, Please Try Again');
   }
 });
 

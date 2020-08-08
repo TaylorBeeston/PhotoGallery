@@ -27,12 +27,15 @@ const useLogin = (): LoginValues => {
           'Content-Type': 'application/json',
         },
       });
+      if (res.status === 200) {
+        localStorage.setItem('accessToken', (await res.json()).accessToken);
 
-      localStorage.setItem('accessToken', (await res.json()).accessToken);
-
-      clearMessage();
-      history.push('/');
-      window.location.reload(false);
+        clearMessage();
+        history.push('/');
+        window.location.reload(false);
+      } else {
+        setMessage(await res.text());
+      }
     } catch (error) {
       setMessage('Log in failed');
     }
