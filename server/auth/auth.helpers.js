@@ -4,10 +4,14 @@ import config from '../config/config';
 import redisClient from '../redis/redis';
 
 const {
-  ACCESS_TOKEN_TIMEOUT,
-  REFRESH_TOKEN_TIMEOUT,
-  REFRESH_TOKEN_REFRESH_TIME,
-} = config.JWT;
+  JWT: {
+    ACCESS_TOKEN_TIMEOUT,
+    REFRESH_TOKEN_TIMEOUT,
+    REFRESH_TOKEN_REFRESH_TIME,
+    SECRET,
+    REFRESH_SECRET,
+  },
+} = config;
 
 const exists = promisify(redisClient.exists).bind(redisClient);
 const setex = promisify(redisClient.setex).bind(redisClient);
@@ -26,7 +30,7 @@ export const verifyRefreshToken = async (token) => {
   const blacklisted = await exists(token);
   if (blacklisted === 1) return false;
 
-  return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+  return jwt.verify(token, REFRESH_SECRET);
 };
 
 /**
@@ -38,8 +42,7 @@ export const verifyRefreshToken = async (token) => {
  * @throws {JsonWebTokenError} if token is invalid
  * @throws {NotBeforeError} if current time is before nbf value
  */
-export const verifyAccessToken = (token) =>
-  jwt.verify(token, process.env.JWT_SECRET);
+export const verifyAccessToken = (token) => jwt.verify(token, SECRET);
 
 /**
  * Blacklists a given refresh token
@@ -72,7 +75,7 @@ export const newRefreshToken = (username, oldRefreshToken) => {
     blacklistToken(oldRefreshToken, REFRESH_TOKEN_REFRESH_TIME);
   }
 
-  return jwt.sign({ username }, process.env.JWT_REFRESH_SECRET, {
+  return jwt.sign({ username }, REFRESH_SECRET, {
     expiresIn: REFRESH_TOKEN_TIMEOUT,
   });
 };
@@ -84,7 +87,7 @@ export const newRefreshToken = (username, oldRefreshToken) => {
  * @return {string} Valid refresh token
  */
 export const newAccessToken = (username) =>
-  jwt.sign({ username }, process.env.JWT_SECRET, {
+  jwt.sign({ username }, SECRET, {
     expiresIn: ACCESS_TOKEN_TIMEOUT,
   });
 

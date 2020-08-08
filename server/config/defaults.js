@@ -12,6 +12,8 @@ export default {
     ACCESS_TOKEN_TIMEOUT: 30 * 60, // 30 Mintes
     REFRESH_TOKEN_TIMEOUT: 7 * 24 * 60 * 60, // 1 Week
     REFRESH_TOKEN_REFRESH_TIME: 24 * 60 * 60, // 1 Day
+    SECRET: process.env.JWT_SECRET,
+    REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
   },
   UPLOADER: 'local',
 };
