@@ -12214,10 +12214,10 @@ tailwindcss-spinner@^1.2.0:
     flat "^4.1.0"
     lodash "^4.17.11"
 
-tailwindcss@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.6.3.tgz#92a759eaaeeafcde8167a3c3fac4018d59ba5892"
-  integrity sha512-omopCo7QGOclvUYWVpur0/jdP3AKLZPQr0XQB0+qbiHp7V2/tj6uknqvskUkYxP0yuQCL8i/Ekn4JaxbSV60gQ==
+tailwindcss@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.7.1.tgz#2660f71e2d6735a311965a5b8e574f0b051c3963"
+  integrity sha512-gc8dvU/Oxp+z+ow3+UblVE3MB40xmau3yIMDTM4VRVhW5Rqb2tDY7MyDH9YjjnlvBqtvQaWseLk7kk6Gpk3NPA==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"
@@ -12235,6 +12235,7 @@ tailwindcss@^1.6.3:
     postcss-js "^2.0.0"
     postcss-nested "^4.1.1"
     postcss-selector-parser "^6.0.0"
+    postcss-value-parser "^4.1.0"
     pretty-hrtime "^1.0.3"
     reduce-css-calc "^2.1.6"
     resolve "^1.14.2"
