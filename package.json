@@ -57,7 +57,7 @@
     "postcss-cli": "^7.1.1",
     "prettier": "^2.1.0",
     "supertest": "^4.0.2",
-    "tailwindcss": "^1.7.3",
+    "tailwindcss": "^1.7.6",
     "tailwindcss-animations": "^2.0.0",
     "tailwindcss-filters": "^3.0.0",
     "tailwindcss-gradients": "^3.0.0",
